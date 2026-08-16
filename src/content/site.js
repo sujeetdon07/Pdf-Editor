@@ -525,8 +525,16 @@ export const PAGES = [
       {
         heading: 'Data we collect',
         body: [
-          'We do not ask for an account, an email address or any personal information, and the site sets no tracking cookies.',
+          'We do not ask for an account, an email address or any personal information, and we set no analytics or tracking cookies of our own. Usage counters shown on the site are stored in your browser and never sent anywhere. Advertising cookies are covered in the next section and only appear if you accept them.',
           'The site is hosted on Vercel, which records standard server request logs such as IP address, timestamp and requested URL for the page and script files themselves. Web fonts are requested from Google Fonts, which receives the same kind of request data. Neither ever sees the contents of your documents.',
+        ],
+      },
+      {
+        heading: 'Advertising cookies',
+        body: [
+          'The tools are free to use and are funded by ads served through Google AdSense. No advertising script is loaded until you press Accept on the cookie notice, and pressing Decline means the script is never requested at all — the tools work identically either way.',
+          'If you accept, Google and its partners may set cookies or read device identifiers to select ads and measure how they perform, and may use that data to personalise advertising. Google’s own description of this is at policies.google.com/technologies/partner-sites, and personalised advertising can be turned off at any time at adssettings.google.com.',
+          'You can change your mind whenever you like: the Cookie choices link in the footer brings the notice back. Advertising never has access to your documents, because those are only ever held in your browser’s memory.',
         ],
       },
       {
