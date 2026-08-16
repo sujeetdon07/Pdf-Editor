@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Dropzone from '../components/Dropzone'
 import ToolShell, { ProgressBar } from '../components/ToolShell'
 import { pdfToSheet, type PdfToSheetResult } from '../lib/pdfToSheet'
-import { downloadBlob, formatBytes, stripExtension } from '../lib/files'
+import { describeFailure, downloadBlob, formatBytes, stripExtension } from '../lib/files'
 
 export default function PdfToExcel() {
   const [file, setFile] = useState<File | null>(null)
@@ -33,7 +33,7 @@ export default function PdfToExcel() {
     try {
       setResult(await pdfToSheet(file, { numbersAsValues }, setProgress))
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : 'Could not convert this PDF.')
+      setError(describeFailure(cause, 'Could not convert this PDF.'))
     } finally {
       setIsWorking(false)
     }

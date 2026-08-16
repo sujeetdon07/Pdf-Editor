@@ -7,7 +7,7 @@ import {
   type CompressResult,
   type CompressionLevel,
 } from '../lib/compressPdf'
-import { downloadBlob, formatBytes, stripExtension } from '../lib/files'
+import { describeFailure, downloadBlob, formatBytes, stripExtension } from '../lib/files'
 
 type SizeUnit = 'KB' | 'MB'
 
@@ -40,7 +40,7 @@ export default function CompressPdf() {
     try {
       setResult(await compressPdf(file, { mode, level, targetBytes }, setProgress))
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : 'Could not compress this PDF.')
+      setError(describeFailure(cause, 'Could not compress this PDF.'))
     } finally {
       setIsWorking(false)
     }

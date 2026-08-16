@@ -10,7 +10,7 @@ import {
   type ImageFormat,
   type RenderedPage,
 } from '../lib/pdfToImages'
-import { downloadBlob, formatBytes, stripExtension } from '../lib/files'
+import { describeFailure, downloadBlob, formatBytes, stripExtension } from '../lib/files'
 
 const DPI_PRESETS = [72, 150, 300, 600]
 
@@ -37,7 +37,7 @@ export default function PdfToImage() {
     try {
       setPages(await pdfToImages(file, format, clampDpi(dpi), setProgress))
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : 'Could not convert this PDF.')
+      setError(describeFailure(cause, 'Could not convert this PDF.'))
     } finally {
       setIsWorking(false)
     }

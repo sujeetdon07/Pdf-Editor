@@ -3,7 +3,7 @@ import Dropzone from '../components/Dropzone'
 import ToolShell, { OptionGroup, ProgressBar } from '../components/ToolShell'
 import { canvasToBlob, loadPdf, renderPageToCanvas } from '../lib/pdfjs'
 import { stampPdf, type Mark, type MarkKind } from '../lib/stampPdf'
-import { downloadBlob, formatBytes, stripExtension } from '../lib/files'
+import { describeFailure, downloadBlob, formatBytes, stripExtension } from '../lib/files'
 
 interface Preview {
   url: string
@@ -149,7 +149,7 @@ export default function EditPdf() {
     try {
       setResult(await stampPdf(file, marks, setProgress))
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : 'Could not save this PDF.')
+      setError(describeFailure(cause, 'Could not save this PDF.'))
     } finally {
       setIsWorking(false)
     }
