@@ -5,7 +5,8 @@
  * static files directly and React replaces the fallback markup as soon as it
  * mounts; addresses with no file fall through to 404.html.
  *
- * Also emits 404.html, sitemap.xml and robots.txt from the same route list.
+ * Also emits 404.html, sitemap.xml, robots.txt and — when an AdSense publisher
+ * ID is configured — ads.txt, from the same route list.
  */
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
@@ -15,6 +16,10 @@ import { HOME, PAGES, SITE, TOOLS } from '../src/content/site.js'
 import { homeSchema, pageSchema, toolSchema } from '../src/lib/schema.js'
 
 const dist = join(dirname(fileURLToPath(import.meta.url)), '..', 'dist')
+
+// Both are optional: unset simply means the tag or file is not written.
+const ADSENSE_CLIENT = process.env.VITE_ADSENSE_CLIENT ?? ''
+const SITE_VERIFICATION = process.env.VITE_GOOGLE_SITE_VERIFICATION ?? ''
 
 const escape = (value) =>
   value
@@ -75,6 +80,18 @@ function schemaFor(route) {
   return homeSchema(TOOLS)
 }
 
+/** Ownership and publisher tags Google looks for on every page. */
+function verification() {
+  const tags = []
+  if (SITE_VERIFICATION) {
+    tags.push(`<meta name="google-site-verification" content="${escape(SITE_VERIFICATION)}" />`)
+  }
+  if (ADSENSE_CLIENT) {
+    tags.push(`<meta name="google-adsense-account" content="${escape(ADSENSE_CLIENT)}" />`)
+  }
+  return tags
+}
+
 function head(route) {
   const url = `${SITE.url}${route.path === '/' ? '/' : route.path}`
   const image = `${SITE.url}/logo.svg`
@@ -83,6 +100,7 @@ function head(route) {
       `<title>${escape(route.title)}</title>`,
       `<meta name="description" content="${escape(route.description)}" />`,
       `<meta name="robots" content="noindex, follow" />`,
+      ...verification(),
     ].join('\n    ')
   }
   return [
@@ -99,6 +117,7 @@ function head(route) {
     `<meta name="twitter:title" content="${escape(route.title)}" />`,
     `<meta name="twitter:description" content="${escape(route.description)}" />`,
     `<meta name="robots" content="index, follow, max-image-preview:large" />`,
+    ...verification(),
     `<script type="application/ld+json">${JSON.stringify(schemaFor(route)).replaceAll(
       '<',
       '\\u003c',
@@ -166,4 +185,14 @@ await writeFile(
   `User-agent: *\nAllow: /\n\nSitemap: ${SITE.url}/sitemap.xml\n`,
 )
 
-console.log(`prerendered ${routes.length} routes, 404.html, sitemap and robots.txt`)
+// Sellers declaration for AdSense; without it Google treats inventory as unauthorised.
+if (ADSENSE_CLIENT.startsWith('ca-pub-')) {
+  const publisher = ADSENSE_CLIENT.replace(/^ca-/, '')
+  await writeFile(join(dist, 'ads.txt'), `google.com, ${publisher}, DIRECT, f08c47fec0942fa0\n`)
+}
+
+console.log(
+  `prerendered ${routes.length} routes, 404.html, sitemap and robots.txt${
+    ADSENSE_CLIENT ? ', ads.txt' : ''
+  }`,
+)

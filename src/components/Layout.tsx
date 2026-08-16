@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { NAV_GROUPS, PAGES, SITE, TOOLS } from '../content/site'
+import { AD_SLOTS, adsEnabled } from '../lib/ads'
+import { resetConsent } from '../lib/consent'
+import AdSlot from './AdSlot'
+import ConsentBanner from './ConsentBanner'
 import StatsBand from './StatsBand'
 
 function navLinkClass({ isActive }: { isActive: boolean }) {
@@ -141,6 +145,11 @@ export default function Layout() {
           <Outlet />
         </main>
 
+        <AdSlot
+          slot={AD_SLOTS.footer}
+          className="mx-auto w-full max-w-5xl px-4 pb-4 sm:px-8"
+        />
+
         <StatsBand />
 
         <footer className="border-t border-ink-800 bg-ink-950/60">
@@ -183,18 +192,33 @@ export default function Layout() {
                     Sitemap
                   </a>
                 </li>
+                {adsEnabled() ? (
+                  <li>
+                    <button
+                      type="button"
+                      className="text-xs text-ink-300 hover:text-white"
+                      onClick={resetConsent}
+                    >
+                      Cookie choices
+                    </button>
+                  </li>
+                ) : null}
               </ul>
             </div>
           </div>
           <div className="border-t border-ink-800 px-4 py-5 text-xs text-ink-500 sm:px-8">
             <div className="mx-auto flex w-full max-w-5xl flex-wrap items-center justify-between gap-2">
               <span>
-                {`© ${new Date().getFullYear()} ${SITE.name} · ${TOOLS.length} tools · no accounts, no uploads, no tracking`}
+                {`© ${new Date().getFullYear()} ${SITE.name} · ${TOOLS.length} tools · no accounts, no uploads${
+                  adsEnabled() ? '' : ', no tracking'
+                }`}
               </span>
               <span>Made for people who read the privacy policy.</span>
             </div>
           </div>
         </footer>
+
+        <ConsentBanner />
       </div>
     </div>
   )

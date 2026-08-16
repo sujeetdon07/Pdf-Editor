@@ -27,4 +27,10 @@ npm run build    # type-check + production build to dist/
 npm run lint
 ```
 
+## Ads and Search Console (optional)
+
+Everything in `.env.example` is optional and unset by default: with no publisher ID the site loads no third-party script, shows no cookie notice and writes no `ads.txt`.
+
+Set `VITE_ADSENSE_CLIENT` (plus the two slot IDs) in the host's environment variables and the build writes `ads.txt` and a `google-adsense-account` meta tag; the AdSense script itself is only requested after a visitor accepts the cookie notice, and "Cookie choices" in the footer reopens it. `VITE_GOOGLE_SITE_VERIFICATION` adds Search Console's ownership meta tag to every prerendered page.
+
 The build output in `dist/` is fully static and can be hosted on any static host (Netlify, Vercel, GitHub Pages, S3). Configure the host to rewrite unknown paths to `index.html` so client-side routes work on refresh.

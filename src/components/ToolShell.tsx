@@ -1,8 +1,10 @@
 import type { ReactNode } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { TOOLS } from '../content/site'
+import { AD_SLOTS } from '../lib/ads'
 import { toolSchema } from '../lib/schema'
 import Seo from './Seo'
+import AdSlot from './AdSlot'
 import FaqList from './FaqList'
 
 interface ToolShellProps {
@@ -43,6 +45,8 @@ export default function ToolShell({ title, description, children, sidebar }: Too
         <div>{children}</div>
         {sidebar ? <aside className="panel h-fit p-5">{sidebar}</aside> : null}
       </div>
+
+      <AdSlot slot={AD_SLOTS.article} className="mt-10 max-w-3xl" />
 
       {tool ? (
         <article className="mt-14 max-w-3xl">
