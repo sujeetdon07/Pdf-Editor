@@ -72,15 +72,15 @@ export default function SplitPdf() {
           />
           {mode === 'ranges' ? (
             <label className="mb-5 block text-sm">
-              <span className="mb-1 block font-semibold text-slate-900">Pages</span>
+              <span className="mb-1 block font-semibold text-white">Pages</span>
               <input
                 value={expression}
                 onChange={(event) => setExpression(event.target.value)}
                 placeholder="1-3, 5"
-                className="w-full rounded-xl border border-slate-300 px-3 py-2 outline-none focus:border-brand-500"
+                className="field"
               />
               {pageCount > 0 ? (
-                <span className="mt-1 block text-xs text-slate-500">
+                <span className="mt-1 block text-xs text-ink-500">
                   This PDF has {pageCount} pages.
                 </span>
               ) : null}
@@ -90,7 +90,7 @@ export default function SplitPdf() {
             type="button"
             disabled={!file || isWorking}
             onClick={run}
-            className="w-full rounded-xl bg-brand-500 px-4 py-3 font-semibold text-white transition hover:bg-brand-600 disabled:cursor-not-allowed disabled:bg-slate-300"
+            className="btn-primary w-full"
           >
             {isWorking ? 'Splitting…' : 'Split PDF'}
           </button>
@@ -98,7 +98,7 @@ export default function SplitPdf() {
             <button
               type="button"
               onClick={downloadAll}
-              className="mt-3 w-full rounded-xl bg-slate-900 px-4 py-3 font-semibold text-white hover:bg-slate-700"
+              className="btn-ghost mt-3 w-full py-3"
             >
               Download all ({parts.length}) as ZIP
             </button>
@@ -108,10 +108,10 @@ export default function SplitPdf() {
     >
       <div className="space-y-6">
         {file ? (
-          <div className="flex items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-6">
+          <div className="flex items-center justify-between gap-4 panel p-6">
             <div className="min-w-0">
-              <p className="truncate font-medium text-slate-900">{file.name}</p>
-              <p className="text-sm text-slate-500">
+              <p className="truncate font-medium text-white">{file.name}</p>
+              <p className="text-sm text-ink-500">
                 {formatBytes(file.size)}
                 {pageCount > 0 ? ` · ${pageCount} pages` : ''}
               </p>
@@ -124,7 +124,7 @@ export default function SplitPdf() {
                 setPageCount(0)
                 setError(null)
               }}
-              className="text-sm font-medium text-slate-500 hover:text-brand-600"
+              className="btn-ghost"
             >
               Remove
             </button>
@@ -138,23 +138,23 @@ export default function SplitPdf() {
           />
         )}
 
-        {error ? <p className="text-sm text-red-600">{error}</p> : null}
+        {error ? <p className="text-sm text-red-400">{error}</p> : null}
 
         {parts.length > 0 ? (
           <ul className="space-y-2">
             {parts.map((part) => (
               <li
                 key={part.name}
-                className="flex items-center justify-between gap-4 rounded-xl border border-slate-200 bg-white p-3"
+                className="flex items-center justify-between gap-4 panel p-3"
               >
                 <div className="min-w-0">
-                  <p className="truncate text-sm font-medium text-slate-900">{part.name}</p>
-                  <p className="text-xs text-slate-500">{formatBytes(part.blob.size)}</p>
+                  <p className="truncate text-sm font-medium text-white">{part.name}</p>
+                  <p className="text-xs text-ink-500">{formatBytes(part.blob.size)}</p>
                 </div>
                 <button
                   type="button"
                   onClick={() => downloadBlob(part.blob, part.name)}
-                  className="text-sm font-semibold text-brand-600 hover:underline"
+                  className="text-sm font-semibold text-iris-300 hover:text-white"
                 >
                   Download
                 </button>

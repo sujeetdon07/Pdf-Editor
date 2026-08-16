@@ -73,7 +73,7 @@ export default function RotatePdf() {
               type="button"
               disabled={thumbnails.length === 0}
               onClick={() => rotateAll(-90)}
-              className="flex-1 rounded-xl border border-slate-300 px-3 py-2 text-sm font-medium hover:bg-slate-50 disabled:opacity-50"
+              className="btn-ghost flex-1 disabled:opacity-40"
             >
               ⟲ Rotate all left
             </button>
@@ -81,7 +81,7 @@ export default function RotatePdf() {
               type="button"
               disabled={thumbnails.length === 0}
               onClick={() => rotateAll(90)}
-              className="flex-1 rounded-xl border border-slate-300 px-3 py-2 text-sm font-medium hover:bg-slate-50 disabled:opacity-50"
+              className="btn-ghost flex-1 disabled:opacity-40"
             >
               ⟳ Rotate all right
             </button>
@@ -90,7 +90,7 @@ export default function RotatePdf() {
             type="button"
             disabled={!file || isWorking || thumbnails.length === 0}
             onClick={run}
-            className="w-full rounded-xl bg-brand-500 px-4 py-3 font-semibold text-white transition hover:bg-brand-600 disabled:cursor-not-allowed disabled:bg-slate-300"
+            className="btn-primary w-full"
           >
             {isWorking ? 'Saving…' : 'Apply rotation'}
           </button>
@@ -98,7 +98,7 @@ export default function RotatePdf() {
             <button
               type="button"
               onClick={() => downloadBlob(result, `${stripExtension(file.name)}-rotated.pdf`)}
-              className="mt-3 w-full rounded-xl bg-slate-900 px-4 py-3 font-semibold text-white hover:bg-slate-700"
+              className="btn-ghost mt-3 w-full py-3"
             >
               Download PDF ({formatBytes(result.size)})
             </button>
@@ -108,10 +108,10 @@ export default function RotatePdf() {
     >
       <div className="space-y-6">
         {file ? (
-          <div className="flex items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-6">
+          <div className="flex items-center justify-between gap-4 panel p-6">
             <div className="min-w-0">
-              <p className="truncate font-medium text-slate-900">{file.name}</p>
-              <p className="text-sm text-slate-500">{formatBytes(file.size)}</p>
+              <p className="truncate font-medium text-white">{file.name}</p>
+              <p className="text-sm text-ink-500">{formatBytes(file.size)}</p>
             </div>
             <button
               type="button"
@@ -120,7 +120,7 @@ export default function RotatePdf() {
                 setFile(null)
                 setError(null)
               }}
-              className="text-sm font-medium text-slate-500 hover:text-brand-600"
+              className="btn-ghost"
             >
               Remove
             </button>
@@ -134,13 +134,13 @@ export default function RotatePdf() {
           />
         )}
 
-        {isLoading ? <p className="text-sm text-slate-500">Rendering pages…</p> : null}
-        {error ? <p className="text-sm text-red-600">{error}</p> : null}
+        {isLoading ? <p className="text-sm text-ink-500">Rendering pages…</p> : null}
+        {error ? <p className="text-sm text-red-400">{error}</p> : null}
 
         {thumbnails.length > 0 ? (
           <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3">
             {thumbnails.map((url, index) => (
-              <li key={url} className="rounded-xl border border-slate-200 bg-white p-3">
+              <li key={url} className="panel p-3">
                 <div className="grid h-40 place-items-center overflow-hidden">
                   <img
                     src={url}
@@ -149,13 +149,13 @@ export default function RotatePdf() {
                     style={{ transform: `rotate(${rotations[index]}deg)` }}
                   />
                 </div>
-                <div className="mt-2 flex items-center justify-between text-xs text-slate-600">
+                <div className="mt-2 flex items-center justify-between text-xs text-ink-300">
                   <span>Page {index + 1}</span>
                   <span className="flex gap-1">
                     <button
                       type="button"
                       onClick={() => rotate(index, -90)}
-                      className="rounded px-2 py-1 hover:bg-slate-100"
+                      className="rounded px-2 py-1 text-ink-300 hover:bg-ink-800 hover:text-white"
                       aria-label={`Rotate page ${index + 1} left`}
                     >
                       ⟲
@@ -163,7 +163,7 @@ export default function RotatePdf() {
                     <button
                       type="button"
                       onClick={() => rotate(index, 90)}
-                      className="rounded px-2 py-1 hover:bg-slate-100"
+                      className="rounded px-2 py-1 text-ink-300 hover:bg-ink-800 hover:text-white"
                       aria-label={`Rotate page ${index + 1} right`}
                     >
                       ⟳

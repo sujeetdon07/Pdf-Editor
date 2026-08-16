@@ -107,10 +107,10 @@ export default function ImageToPdf() {
               ]}
             />
           ) : null}
-          <label className="mb-5 flex items-center gap-2 text-sm text-slate-700">
+          <label className="mb-5 flex items-center gap-2 text-sm text-ink-300">
             <input
               type="checkbox"
-              className="accent-brand-500"
+              className="accent-iris-500"
               checked={withMargin}
               onChange={(event) => setWithMargin(event.target.checked)}
             />
@@ -120,7 +120,7 @@ export default function ImageToPdf() {
             type="button"
             disabled={items.length === 0 || isWorking}
             onClick={run}
-            className="w-full rounded-xl bg-brand-500 px-4 py-3 font-semibold text-white transition hover:bg-brand-600 disabled:cursor-not-allowed disabled:bg-slate-300"
+            className="btn-primary w-full"
           >
             {isWorking ? 'Converting…' : 'Convert to PDF'}
           </button>
@@ -128,7 +128,7 @@ export default function ImageToPdf() {
             <button
               type="button"
               onClick={() => downloadBlob(pdf, 'images.pdf')}
-              className="mt-3 w-full rounded-xl bg-slate-900 px-4 py-3 font-semibold text-white hover:bg-slate-700"
+              className="btn-ghost mt-3 w-full py-3"
             >
               Download PDF ({formatBytes(pdf.size)})
             </button>
@@ -146,28 +146,28 @@ export default function ImageToPdf() {
         />
 
         {isWorking ? <ProgressBar ratio={progress} /> : null}
-        {error ? <p className="text-sm text-red-600">{error}</p> : null}
+        {error ? <p className="text-sm text-red-400">{error}</p> : null}
 
         {items.length > 0 ? (
-          <div className="rounded-2xl border border-slate-200 bg-white p-5">
-            <p className="mb-4 text-sm text-slate-500">
+          <div className="panel p-5">
+            <p className="mb-4 text-sm text-ink-500">
               {items.length} image{items.length > 1 ? 's' : ''} · {formatBytes(totalSize)}
             </p>
             <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3">
               {items.map((item, index) => (
-                <li key={item.id} className="rounded-xl border border-slate-200 p-2">
+                <li key={item.id} className="panel p-2">
                   <img
                     src={item.url}
                     alt={item.file.name}
                     className="h-32 w-full rounded-lg object-contain"
                   />
-                  <p className="mt-2 truncate text-xs text-slate-600">{item.file.name}</p>
+                  <p className="mt-2 truncate text-xs text-ink-300">{item.file.name}</p>
                   <div className="mt-2 flex items-center justify-between text-xs">
                     <div className="flex gap-1">
                       <button
                         type="button"
                         onClick={() => move(index, -1)}
-                        className="rounded px-2 py-1 hover:bg-slate-100"
+                        className="rounded px-2 py-1 text-ink-300 hover:bg-ink-800 hover:text-white"
                         aria-label="Move left"
                       >
                         ←
@@ -175,7 +175,7 @@ export default function ImageToPdf() {
                       <button
                         type="button"
                         onClick={() => move(index, 1)}
-                        className="rounded px-2 py-1 hover:bg-slate-100"
+                        className="rounded px-2 py-1 text-ink-300 hover:bg-ink-800 hover:text-white"
                         aria-label="Move right"
                       >
                         →
@@ -187,7 +187,7 @@ export default function ImageToPdf() {
                         setPdf(null)
                         setItems((current) => current.filter((c) => c.id !== item.id))
                       }}
-                      className="font-medium text-slate-500 hover:text-brand-600"
+                      className="text-iris-300 hover:text-white"
                     >
                       Remove
                     </button>
