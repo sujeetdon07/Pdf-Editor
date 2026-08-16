@@ -1,4 +1,9 @@
 import type { ReactNode } from 'react'
+import { Link, useLocation } from 'react-router-dom'
+import { TOOLS } from '../content/site'
+import { toolSchema } from '../lib/schema'
+import Seo from './Seo'
+import FaqList from './FaqList'
 
 interface ToolShellProps {
   title: string
@@ -7,9 +12,27 @@ interface ToolShellProps {
   sidebar?: ReactNode
 }
 
+/**
+ * Every tool page is described once in `content/site.js`; the shell looks its
+ * own route up there so the head tags and the article below the tool stay in
+ * sync with the sitemap and the prerendered HTML.
+ */
 export default function ToolShell({ title, description, children, sidebar }: ToolShellProps) {
+  const { pathname } = useLocation()
+  const tool = TOOLS.find((candidate) => candidate.path === pathname)
+  const related = TOOLS.filter((candidate) => candidate.path !== pathname).slice(0, 6)
+
   return (
     <div>
+      {tool ? (
+        <Seo
+          title={tool.title}
+          description={tool.description}
+          path={tool.path}
+          schema={toolSchema(tool)}
+        />
+      ) : null}
+
       <div className="mb-8 border-l-2 border-iris-500 pl-4">
         <h1 className="font-display text-2xl font-bold tracking-tight text-white sm:text-3xl">
           {title}
@@ -20,6 +43,43 @@ export default function ToolShell({ title, description, children, sidebar }: Too
         <div>{children}</div>
         {sidebar ? <aside className="panel h-fit p-5">{sidebar}</aside> : null}
       </div>
+
+      {tool ? (
+        <article className="mt-14 max-w-3xl">
+          <h2 className="font-display text-xl font-bold text-white">
+            {tool.heading} — how it works
+          </h2>
+          <p className="mt-3 text-sm leading-relaxed text-ink-300">{tool.intro}</p>
+
+          <h3 className="mt-8 font-display text-lg font-bold text-white">How to {tool.howTo}</h3>
+          <ol className="mt-3 space-y-2 text-sm text-ink-300">
+            {tool.steps.map((step, index) => (
+              <li key={step} className="flex gap-3">
+                <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-iris-500/15 text-xs font-semibold text-iris-300">
+                  {index + 1}
+                </span>
+                {step}
+              </li>
+            ))}
+          </ol>
+
+          <FaqList heading="Questions about this tool" faqs={tool.faqs} />
+
+          <h3 className="mt-10 font-display text-lg font-bold text-white">Related tools</h3>
+          <ul className="mt-3 flex flex-wrap gap-2">
+            {related.map((item) => (
+              <li key={item.path}>
+                <Link
+                  to={item.path}
+                  className="inline-block rounded-full border border-ink-700 px-3 py-1 text-xs text-ink-300 transition hover:border-iris-500/60 hover:text-white"
+                >
+                  {item.heading}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </article>
+      ) : null}
     </div>
   )
 }
