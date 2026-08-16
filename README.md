@@ -1,10 +1,13 @@
 # PDFTools
 
-An iLovePDF-style web app with three tools, all running entirely in the browser — no server, no uploads.
+An iLovePDF-style web app, running entirely in the browser — no server, no uploads.
 
 - **Compress PDF** — re-encodes each page as JPEG at a chosen quality/scale and rebuilds the document, keeping the original page dimensions. Falls back to the original file if compression would make it bigger.
 - **Image to PDF** — combines JPG/PNG/WebP images into one PDF, with fit-to-image / A4 / Letter page sizes, orientation, margin and page reordering.
 - **PDF to Image** — renders every page to JPG or PNG at normal or high resolution, with per-page download or a ZIP of all pages.
+- **Merge PDF** — concatenates several PDFs in a reorderable list.
+- **Split PDF** — extracts custom page ranges (`1-3, 5`) or splits every page into its own PDF, downloadable individually or as a ZIP.
+- **Rotate PDF** — page thumbnails with per-page or whole-document rotation, applied on top of each page's existing rotation.
 
 ## Stack
 

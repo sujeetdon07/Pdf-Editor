@@ -19,6 +19,24 @@ const TOOLS = [
     description: 'Export every page of a PDF as a JPG or PNG image.',
     icon: '📄',
   },
+  {
+    to: '/merge-pdf',
+    title: 'Merge PDF',
+    description: 'Combine multiple PDFs into one file in the order you pick.',
+    icon: '🔗',
+  },
+  {
+    to: '/split-pdf',
+    title: 'Split PDF',
+    description: 'Extract page ranges or split every page into its own PDF.',
+    icon: '✂️',
+  },
+  {
+    to: '/rotate-pdf',
+    title: 'Rotate PDF',
+    description: 'Rotate single pages or the whole document and save it.',
+    icon: '🔄',
+  },
 ]
 
 export default function Home() {

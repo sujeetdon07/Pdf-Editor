@@ -4,6 +4,9 @@ const NAV = [
   { to: '/compress-pdf', label: 'Compress PDF' },
   { to: '/jpg-to-pdf', label: 'Image to PDF' },
   { to: '/pdf-to-jpg', label: 'PDF to Image' },
+  { to: '/merge-pdf', label: 'Merge' },
+  { to: '/split-pdf', label: 'Split' },
+  { to: '/rotate-pdf', label: 'Rotate' },
 ]
 
 export default function Layout() {
