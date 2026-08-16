@@ -6,7 +6,7 @@ import {
   type Orientation,
   type PageSize,
 } from '../lib/imagesToPdf'
-import { downloadBlob, formatBytes } from '../lib/files'
+import { describeFailure, downloadBlob, formatBytes } from '../lib/files'
 
 interface Item {
   id: string
@@ -74,7 +74,7 @@ export default function ImageToPdf() {
       )
       setPdf(blob)
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : 'Could not build the PDF.')
+      setError(describeFailure(cause, 'Could not build the PDF.'))
     } finally {
       setIsWorking(false)
     }

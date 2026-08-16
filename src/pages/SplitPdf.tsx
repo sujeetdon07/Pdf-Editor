@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Dropzone from '../components/Dropzone'
 import ToolShell, { OptionGroup } from '../components/ToolShell'
 import { getPageCount, parseRanges, splitPdf, zipParts, type SplitPart } from '../lib/editPdf'
-import { downloadBlob, formatBytes, stripExtension } from '../lib/files'
+import { describeFailure, downloadBlob, formatBytes, stripExtension } from '../lib/files'
 
 type SplitMode = 'ranges' | 'pages'
 
@@ -44,7 +44,7 @@ export default function SplitPdf() {
           : parseRanges(expression, pageCount)
       setParts(await splitPdf(file, ranges, stripExtension(file.name)))
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : 'Could not split this PDF.')
+      setError(describeFailure(cause, 'Could not split this PDF.'))
     } finally {
       setIsWorking(false)
     }

@@ -3,7 +3,7 @@ import Dropzone from '../components/Dropzone'
 import ToolShell, { OptionGroup, ProgressBar } from '../components/ToolShell'
 import { docxToPdf } from '../lib/docxToPdf'
 import type { DocOrientation, DocPageSize } from '../lib/htmlToPdf'
-import { downloadBlob, formatBytes, stripExtension } from '../lib/files'
+import { describeFailure, downloadBlob, formatBytes, stripExtension } from '../lib/files'
 
 export default function WordToPdf() {
   const [file, setFile] = useState<File | null>(null)
@@ -40,7 +40,7 @@ export default function WordToPdf() {
       setPdf(result.blob)
       setWarnings(result.warnings)
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : 'Could not convert this document.')
+      setError(describeFailure(cause, 'Could not convert this document.'))
     } finally {
       setIsWorking(false)
     }

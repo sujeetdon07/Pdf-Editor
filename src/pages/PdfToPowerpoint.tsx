@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Dropzone from '../components/Dropzone'
 import ToolShell, { OptionGroup, ProgressBar } from '../components/ToolShell'
 import { pdfToPptx, type PdfToPptxResult } from '../lib/pdfToPptx'
-import { downloadBlob, formatBytes, stripExtension } from '../lib/files'
+import { describeFailure, downloadBlob, formatBytes, stripExtension } from '../lib/files'
 
 const DPI_OPTIONS = ['96', '150', '220'] as const
 type Dpi = (typeof DPI_OPTIONS)[number]
@@ -36,7 +36,7 @@ export default function PdfToPowerpoint() {
     try {
       setResult(await pdfToPptx(file, { dpi: Number(dpi), quality: 0.9 }, setProgress))
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : 'Could not convert this PDF.')
+      setError(describeFailure(cause, 'Could not convert this PDF.'))
     } finally {
       setIsWorking(false)
     }

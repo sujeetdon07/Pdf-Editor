@@ -2,10 +2,10 @@
  * Post-build step: writes a real HTML file for every route so crawlers and
  * social scrapers get the right title, description, canonical URL, structured
  * data and readable copy without executing JavaScript. Vercel serves these
- * static files before the SPA rewrite, and React replaces the fallback markup
- * as soon as it mounts.
+ * static files directly and React replaces the fallback markup as soon as it
+ * mounts; addresses with no file fall through to 404.html.
  *
- * Also emits sitemap.xml and robots.txt from the same route list.
+ * Also emits 404.html, sitemap.xml and robots.txt from the same route list.
  */
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
@@ -78,6 +78,13 @@ function schemaFor(route) {
 function head(route) {
   const url = `${SITE.url}${route.path === '/' ? '/' : route.path}`
   const image = `${SITE.url}/logo.svg`
+  if (route.noindex) {
+    return [
+      `<title>${escape(route.title)}</title>`,
+      `<meta name="description" content="${escape(route.description)}" />`,
+      `<meta name="robots" content="noindex, follow" />`,
+    ].join('\n    ')
+  }
   return [
     `<title>${escape(route.title)}</title>`,
     `<meta name="description" content="${escape(route.description)}" />`,
@@ -116,6 +123,27 @@ for (const route of routes) {
   await writeFile(target, html)
 }
 
+// Vercel serves this with a 404 status for any address that has no file, and
+// React Router swaps in the interactive NotFound page once it mounts.
+const notFound = { path: '/404', noindex: true, title: `Page not found — ${SITE.name}`, description: 'That address does not exist on CelloPDF.' }
+await writeFile(
+  join(dist, '404.html'),
+  template
+    .replace(/<title>.*?<\/title>\s*/s, '')
+    .replace(/<meta\s+name="description"[^>]*>\s*/s, '')
+    .replace(/<meta\s+name="robots"[^>]*>\s*/s, '')
+    .replace(/<link\s+rel="canonical"[^>]*>\s*/s, '')
+    .replace('</head>', `  ${head(notFound)}\n  </head>`)
+    .replace(
+      '<div id="root"></div>',
+      `<div id="root"><h1>Page not found</h1>${paragraph(
+        'That address does not exist. Pick a tool below, or go back home.',
+      )}<ul>${TOOLS.map(
+        (tool) => `<li><a href="${tool.path}">${escape(tool.heading)}</a></li>`,
+      ).join('')}</ul></div>`,
+    ),
+)
+
 const today = new Date().toISOString().slice(0, 10)
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -138,4 +166,4 @@ await writeFile(
   `User-agent: *\nAllow: /\n\nSitemap: ${SITE.url}/sitemap.xml\n`,
 )
 
-console.log(`prerendered ${routes.length} routes, sitemap and robots.txt`)
+console.log(`prerendered ${routes.length} routes, 404.html, sitemap and robots.txt`)

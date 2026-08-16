@@ -3,7 +3,7 @@ import Dropzone from '../components/Dropzone'
 import ToolShell, { OptionGroup, ProgressBar } from '../components/ToolShell'
 import { sheetToPdf } from '../lib/sheetToPdf'
 import type { DocOrientation, DocPageSize } from '../lib/htmlToPdf'
-import { downloadBlob, formatBytes, stripExtension } from '../lib/files'
+import { describeFailure, downloadBlob, formatBytes, stripExtension } from '../lib/files'
 
 export default function ExcelToPdf() {
   const [file, setFile] = useState<File | null>(null)
@@ -41,7 +41,7 @@ export default function ExcelToPdf() {
       )
       setPdf(blob)
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : 'Could not convert this spreadsheet.')
+      setError(describeFailure(cause, 'Could not convert this spreadsheet.'))
     } finally {
       setIsWorking(false)
     }

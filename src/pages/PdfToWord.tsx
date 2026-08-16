@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Dropzone from '../components/Dropzone'
 import ToolShell, { ProgressBar } from '../components/ToolShell'
 import { pdfToDocx, type PdfToDocxResult } from '../lib/pdfToDocx'
-import { downloadBlob, formatBytes, stripExtension } from '../lib/files'
+import { describeFailure, downloadBlob, formatBytes, stripExtension } from '../lib/files'
 
 export default function PdfToWord() {
   const [file, setFile] = useState<File | null>(null)
@@ -32,7 +32,7 @@ export default function PdfToWord() {
     try {
       setResult(await pdfToDocx(file, setProgress))
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : 'Could not convert this PDF.')
+      setError(describeFailure(cause, 'Could not convert this PDF.'))
     } finally {
       setIsWorking(false)
     }

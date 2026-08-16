@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Dropzone from '../components/Dropzone'
 import ToolShell, { ProgressBar } from '../components/ToolShell'
 import { pptxToPdf } from '../lib/pptxToPdf'
-import { downloadBlob, formatBytes, stripExtension } from '../lib/files'
+import { describeFailure, downloadBlob, formatBytes, stripExtension } from '../lib/files'
 
 export default function PowerpointToPdf() {
   const [file, setFile] = useState<File | null>(null)
@@ -32,7 +32,7 @@ export default function PowerpointToPdf() {
     try {
       setResult(await pptxToPdf(file, setProgress))
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : 'Could not convert this presentation.')
+      setError(describeFailure(cause, 'Could not convert this presentation.'))
     } finally {
       setIsWorking(false)
     }

@@ -3,7 +3,7 @@ import Dropzone from '../components/Dropzone'
 import ToolShell from '../components/ToolShell'
 import { rotatePdf } from '../lib/editPdf'
 import { renderThumbnails } from '../lib/pdfToImages'
-import { downloadBlob, formatBytes, stripExtension } from '../lib/files'
+import { describeFailure, downloadBlob, formatBytes, stripExtension } from '../lib/files'
 
 export default function RotatePdf() {
   const [file, setFile] = useState<File | null>(null)
@@ -56,7 +56,7 @@ export default function RotatePdf() {
     try {
       setResult(await rotatePdf(file, rotations))
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : 'Could not rotate this PDF.')
+      setError(describeFailure(cause, 'Could not rotate this PDF.'))
     } finally {
       setIsWorking(false)
     }

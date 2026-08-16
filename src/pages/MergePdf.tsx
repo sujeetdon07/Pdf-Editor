@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Dropzone from '../components/Dropzone'
 import ToolShell, { ProgressBar } from '../components/ToolShell'
 import { mergePdfs } from '../lib/editPdf'
-import { downloadBlob, formatBytes } from '../lib/files'
+import { describeFailure, downloadBlob, formatBytes } from '../lib/files'
 
 interface Item {
   id: string
@@ -56,7 +56,7 @@ export default function MergePdf() {
     try {
       setMerged(await mergePdfs(items.map((item) => item.file), setProgress))
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : 'Could not merge these PDFs.')
+      setError(describeFailure(cause, 'Could not merge these PDFs.'))
     } finally {
       setIsWorking(false)
     }
