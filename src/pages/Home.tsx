@@ -55,6 +55,30 @@ const TOOLS = [
     description: 'Recover the text of a PDF as an editable .docx you can keep working in.',
     tag: 'Editable',
   },
+  {
+    to: '/pdf-to-excel',
+    title: 'PDF → Excel',
+    description: 'Lift tables out of a PDF into a workbook, one sheet per page.',
+    tag: 'Tables',
+  },
+  {
+    to: '/powerpoint-to-pdf',
+    title: 'PPT → PDF',
+    description: 'Render a .pptx deck to PDF, one page per slide, in any language.',
+    tag: 'Any language',
+  },
+  {
+    to: '/pdf-to-powerpoint',
+    title: 'PDF → PPT',
+    description: 'Drop every PDF page onto its own slide, sized to match the page.',
+    tag: 'Slide per page',
+  },
+  {
+    to: '/edit-pdf',
+    title: 'Edit',
+    description: 'Type text, highlight passages or white out anything, then save.',
+    tag: 'Text · Marks',
+  },
 ]
 
 export default function Home() {
@@ -71,8 +95,8 @@ export default function Home() {
           never sees your files.
         </h1>
         <p className="mt-4 max-w-xl text-ink-300">
-          Nine precise tools built on modern browser APIs. Convert Office documents, set a target
-          file size, choose an export DPI — and keep every byte on your own machine.
+          Thirteen precise tools built on modern browser APIs. Convert Office documents, edit pages,
+          set a target file size, choose an export DPI — and keep every byte on your own machine.
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
           <Link to="/compress-pdf" className="btn-primary">

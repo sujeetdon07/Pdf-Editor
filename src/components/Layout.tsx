@@ -8,6 +8,7 @@ const GROUPS = [
       { to: '/merge-pdf', label: 'Merge', glyph: '⧉' },
       { to: '/split-pdf', label: 'Split', glyph: '⑂' },
       { to: '/rotate-pdf', label: 'Rotate', glyph: '↻' },
+      { to: '/edit-pdf', label: 'Edit', glyph: '✐' },
     ],
   },
   {
@@ -18,6 +19,9 @@ const GROUPS = [
       { to: '/word-to-pdf', label: 'Word → PDF', glyph: '¶' },
       { to: '/excel-to-pdf', label: 'Excel → PDF', glyph: '▤' },
       { to: '/pdf-to-word', label: 'PDF → Word', glyph: '✎' },
+      { to: '/pdf-to-excel', label: 'PDF → Excel', glyph: '⊞' },
+      { to: '/powerpoint-to-pdf', label: 'PPT → PDF', glyph: '◧' },
+      { to: '/pdf-to-powerpoint', label: 'PDF → PPT', glyph: '❏' },
     ],
   },
 ]
