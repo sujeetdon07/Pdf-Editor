@@ -4,37 +4,38 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        display: ['"Space Grotesk"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        display: ['Fraunces', 'Georgia', 'ui-serif', 'serif'],
+        sans: ['"Public Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       colors: {
+        // Warm off-white surfaces: paper for backgrounds and rules, ink for type.
+        paper: {
+          50: '#fbf8f2',
+          100: '#f5efe4',
+          200: '#ece4d5',
+          300: '#ded4c1',
+          400: '#c8bca4',
+        },
         ink: {
-          950: '#070b16',
-          900: '#0d1424',
-          850: '#131c30',
-          800: '#1b2740',
-          700: '#273450',
-          500: '#8494ad',
-          300: '#a7b2c7',
-          100: '#e6ebf5',
+          900: '#1d1a15',
+          700: '#3d382e',
+          500: '#6b6455',
         },
-        iris: {
-          300: '#b7a7ff',
-          400: '#9a86ff',
-          500: '#7150f5',
-          600: '#6741e6',
+        rust: {
+          300: '#c9573a',
+          400: '#9c3d27',
+          500: '#b4482f',
+          600: '#9c3d27',
         },
-        mint: {
-          400: '#35e0c0',
-          500: '#14c8a6',
+        moss: {
+          400: '#2f6b4f',
+          500: '#255840',
+          600: '#255840',
         },
       },
       boxShadow: {
-        glow: '0 18px 60px -20px rgba(124, 92, 255, 0.55)',
-      },
-      backgroundImage: {
-        aurora:
-          'radial-gradient(60rem 30rem at 15% -10%, rgba(124,92,255,0.28), transparent 60%), radial-gradient(50rem 26rem at 95% 0%, rgba(20,200,166,0.20), transparent 55%)',
+        glow: '0 10px 22px -14px rgba(58, 42, 26, 0.65)',
+        panel: '0 1px 0 rgba(255, 255, 255, 0.8) inset, 0 8px 24px -20px rgba(58, 42, 26, 0.5)',
       },
     },
   },

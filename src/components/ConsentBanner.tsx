@@ -28,13 +28,13 @@ export default function ConsentBanner() {
     <div
       role="dialog"
       aria-label="Cookie choices"
-      className="fixed inset-x-0 bottom-0 z-40 border-t border-ink-800 bg-ink-950/95 px-4 py-4 backdrop-blur sm:px-8"
+      className="fixed inset-x-0 bottom-0 z-40 border-t border-paper-300 bg-paper-50/95 px-4 py-4 backdrop-blur sm:px-8"
     >
       <div className="mx-auto flex w-full max-w-5xl flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-xs leading-relaxed text-ink-300">
+        <p className="text-xs leading-relaxed text-ink-700">
           Your documents stay on your device either way. We would like to show ads, which set
           cookies — decline and no advertising script is loaded at all. See the{' '}
-          <Link to="/privacy" className="text-iris-300 underline">
+          <Link to="/privacy" className="text-rust-600 underline">
             privacy policy
           </Link>
           .

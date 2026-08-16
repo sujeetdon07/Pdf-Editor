@@ -110,7 +110,7 @@ export default function RotatePdf() {
         {file ? (
           <div className="flex items-center justify-between gap-4 panel p-6">
             <div className="min-w-0">
-              <p className="truncate font-medium text-white">{file.name}</p>
+              <p className="truncate font-medium text-ink-900">{file.name}</p>
               <p className="text-sm text-ink-500">{formatBytes(file.size)}</p>
             </div>
             <button
@@ -135,7 +135,7 @@ export default function RotatePdf() {
         )}
 
         {isLoading ? <p className="text-sm text-ink-500">Rendering pages…</p> : null}
-        {error ? <p className="text-sm text-red-400">{error}</p> : null}
+        {error ? <p className="text-sm text-red-700">{error}</p> : null}
 
         {thumbnails.length > 0 ? (
           <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3">
@@ -149,13 +149,13 @@ export default function RotatePdf() {
                     style={{ transform: `rotate(${rotations[index]}deg)` }}
                   />
                 </div>
-                <div className="mt-2 flex items-center justify-between text-xs text-ink-300">
+                <div className="mt-2 flex items-center justify-between text-xs text-ink-700">
                   <span>Page {index + 1}</span>
                   <span className="flex gap-1">
                     <button
                       type="button"
                       onClick={() => rotate(index, -90)}
-                      className="rounded px-2 py-1 text-ink-300 hover:bg-ink-800 hover:text-white"
+                      className="rounded px-2 py-1 text-ink-700 hover:bg-paper-200 hover:text-ink-900"
                       aria-label={`Rotate page ${index + 1} left`}
                     >
                       ⟲
@@ -163,7 +163,7 @@ export default function RotatePdf() {
                     <button
                       type="button"
                       onClick={() => rotate(index, 90)}
-                      className="rounded px-2 py-1 text-ink-300 hover:bg-ink-800 hover:text-white"
+                      className="rounded px-2 py-1 text-ink-700 hover:bg-paper-200 hover:text-ink-900"
                       aria-label={`Rotate page ${index + 1} right`}
                     >
                       ⟳

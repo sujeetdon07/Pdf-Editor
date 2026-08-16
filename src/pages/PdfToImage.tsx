@@ -80,8 +80,8 @@ export default function PdfToImage() {
                   onClick={() => setDpi(preset)}
                   className={`rounded-lg border px-3 py-1.5 text-xs font-medium transition ${
                     dpi === preset
-                      ? 'border-iris-500 bg-iris-500/15 text-white'
-                      : 'border-ink-800 text-ink-300 hover:border-ink-700'
+                      ? 'border-rust-500 bg-rust-500/15 text-ink-900'
+                      : 'border-paper-300 text-ink-700 hover:border-paper-400'
                   }`}
                 >
                   {preset}
@@ -119,7 +119,7 @@ export default function PdfToImage() {
         {file ? (
           <div className="panel flex items-center justify-between gap-4 p-6">
             <div className="min-w-0">
-              <p className="truncate font-medium text-white">{file.name}</p>
+              <p className="truncate font-medium text-ink-900">{file.name}</p>
               <p className="text-sm text-ink-500">{formatBytes(file.size)}</p>
             </div>
             <button
@@ -148,7 +148,7 @@ export default function PdfToImage() {
         )}
 
         {isWorking ? <ProgressBar ratio={progress} /> : null}
-        {error ? <p className="text-sm text-red-400">{error}</p> : null}
+        {error ? <p className="text-sm text-red-700">{error}</p> : null}
 
         {pages.length > 0 ? (
           <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3">
@@ -157,16 +157,16 @@ export default function PdfToImage() {
                 <img
                   src={page.url}
                   alt={`Page ${page.pageNumber}`}
-                  className="h-44 w-full rounded-lg border border-ink-800 bg-ink-950 object-contain"
+                  className="h-44 w-full rounded-lg border border-paper-300 bg-paper-50 object-contain"
                 />
-                <div className="mt-2 flex items-center justify-between text-xs text-ink-300">
+                <div className="mt-2 flex items-center justify-between text-xs text-ink-700">
                   <span>
                     Page {page.pageNumber} · {page.width}×{page.height}
                   </span>
                   <button
                     type="button"
                     onClick={() => downloadBlob(page.blob, page.filename)}
-                    className="font-semibold text-iris-300 hover:text-white"
+                    className="font-semibold text-rust-600 hover:text-ink-900"
                   >
                     Download
                   </button>

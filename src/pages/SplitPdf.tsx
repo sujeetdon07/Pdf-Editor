@@ -72,7 +72,7 @@ export default function SplitPdf() {
           />
           {mode === 'ranges' ? (
             <label className="mb-5 block text-sm">
-              <span className="mb-1 block font-semibold text-white">Pages</span>
+              <span className="mb-1 block font-semibold text-ink-900">Pages</span>
               <input
                 value={expression}
                 onChange={(event) => setExpression(event.target.value)}
@@ -110,7 +110,7 @@ export default function SplitPdf() {
         {file ? (
           <div className="flex items-center justify-between gap-4 panel p-6">
             <div className="min-w-0">
-              <p className="truncate font-medium text-white">{file.name}</p>
+              <p className="truncate font-medium text-ink-900">{file.name}</p>
               <p className="text-sm text-ink-500">
                 {formatBytes(file.size)}
                 {pageCount > 0 ? ` · ${pageCount} pages` : ''}
@@ -138,7 +138,7 @@ export default function SplitPdf() {
           />
         )}
 
-        {error ? <p className="text-sm text-red-400">{error}</p> : null}
+        {error ? <p className="text-sm text-red-700">{error}</p> : null}
 
         {parts.length > 0 ? (
           <ul className="space-y-2">
@@ -148,13 +148,13 @@ export default function SplitPdf() {
                 className="flex items-center justify-between gap-4 panel p-3"
               >
                 <div className="min-w-0">
-                  <p className="truncate text-sm font-medium text-white">{part.name}</p>
+                  <p className="truncate text-sm font-medium text-ink-900">{part.name}</p>
                   <p className="text-xs text-ink-500">{formatBytes(part.blob.size)}</p>
                 </div>
                 <button
                   type="button"
                   onClick={() => downloadBlob(part.blob, part.name)}
-                  className="text-sm font-semibold text-iris-300 hover:text-white"
+                  className="text-sm font-semibold text-rust-600 hover:text-ink-900"
                 >
                   Download
                 </button>

@@ -107,10 +107,10 @@ export default function ImageToPdf() {
               ]}
             />
           ) : null}
-          <label className="mb-5 flex items-center gap-2 text-sm text-ink-300">
+          <label className="mb-5 flex items-center gap-2 text-sm text-ink-700">
             <input
               type="checkbox"
-              className="accent-iris-500"
+              className="accent-rust-500"
               checked={withMargin}
               onChange={(event) => setWithMargin(event.target.checked)}
             />
@@ -146,7 +146,7 @@ export default function ImageToPdf() {
         />
 
         {isWorking ? <ProgressBar ratio={progress} /> : null}
-        {error ? <p className="text-sm text-red-400">{error}</p> : null}
+        {error ? <p className="text-sm text-red-700">{error}</p> : null}
 
         {items.length > 0 ? (
           <div className="panel p-5">
@@ -161,13 +161,13 @@ export default function ImageToPdf() {
                     alt={item.file.name}
                     className="h-32 w-full rounded-lg object-contain"
                   />
-                  <p className="mt-2 truncate text-xs text-ink-300">{item.file.name}</p>
+                  <p className="mt-2 truncate text-xs text-ink-700">{item.file.name}</p>
                   <div className="mt-2 flex items-center justify-between text-xs">
                     <div className="flex gap-1">
                       <button
                         type="button"
                         onClick={() => move(index, -1)}
-                        className="rounded px-2 py-1 text-ink-300 hover:bg-ink-800 hover:text-white"
+                        className="rounded px-2 py-1 text-ink-700 hover:bg-paper-200 hover:text-ink-900"
                         aria-label="Move left"
                       >
                         ←
@@ -175,7 +175,7 @@ export default function ImageToPdf() {
                       <button
                         type="button"
                         onClick={() => move(index, 1)}
-                        className="rounded px-2 py-1 text-ink-300 hover:bg-ink-800 hover:text-white"
+                        className="rounded px-2 py-1 text-ink-700 hover:bg-paper-200 hover:text-ink-900"
                         aria-label="Move right"
                       >
                         →
@@ -187,7 +187,7 @@ export default function ImageToPdf() {
                         setPdf(null)
                         setItems((current) => current.filter((c) => c.id !== item.id))
                       }}
-                      className="text-iris-300 hover:text-white"
+                      className="text-rust-600 hover:text-ink-900"
                     >
                       Remove
                     </button>
