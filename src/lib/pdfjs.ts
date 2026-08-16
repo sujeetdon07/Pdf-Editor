@@ -23,7 +23,7 @@ export async function renderPageToCanvas(
   if (!context) throw new Error('Could not create a 2D canvas context')
   context.fillStyle = '#ffffff'
   context.fillRect(0, 0, canvas.width, canvas.height)
-  await page.render({ canvas, canvasContext: context, viewport }).promise
+  await page.render({ canvasContext: context, viewport }).promise
   return canvas
 }
 
