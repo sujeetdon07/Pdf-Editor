@@ -12,6 +12,10 @@ const RotatePdf = lazy(() => import('./pages/RotatePdf'))
 const WordToPdf = lazy(() => import('./pages/WordToPdf'))
 const ExcelToPdf = lazy(() => import('./pages/ExcelToPdf'))
 const PdfToWord = lazy(() => import('./pages/PdfToWord'))
+const PdfToExcel = lazy(() => import('./pages/PdfToExcel'))
+const PowerpointToPdf = lazy(() => import('./pages/PowerpointToPdf'))
+const PdfToPowerpoint = lazy(() => import('./pages/PdfToPowerpoint'))
+const EditPdf = lazy(() => import('./pages/EditPdf'))
 
 function Loading() {
   return <p className="text-sm text-ink-500">Loading tool…</p>
@@ -32,6 +36,10 @@ export default function App() {
           <Route path="word-to-pdf" element={<WordToPdf />} />
           <Route path="excel-to-pdf" element={<ExcelToPdf />} />
           <Route path="pdf-to-word" element={<PdfToWord />} />
+          <Route path="pdf-to-excel" element={<PdfToExcel />} />
+          <Route path="powerpoint-to-pdf" element={<PowerpointToPdf />} />
+          <Route path="pdf-to-powerpoint" element={<PdfToPowerpoint />} />
+          <Route path="edit-pdf" element={<EditPdf />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>

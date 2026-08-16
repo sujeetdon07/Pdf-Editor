@@ -104,6 +104,53 @@ function breakOffsets(source: HTMLCanvasElement, pageRows: number): number[] {
   return breaks
 }
 
+/**
+ * One PDF page per HTML block, each rendered at a fixed size. Used for content
+ * that is already paginated, such as slides.
+ */
+export async function fixedPagesToPdf(
+  pages: string[],
+  widthPx: number,
+  heightPx: number,
+  onProgress?: (ratio: number) => void,
+): Promise<Blob> {
+  const pdf = await PDFDocument.create()
+
+  for (const [index, html] of pages.entries()) {
+    const host = createHost(widthPx)
+    host.style.height = `${heightPx}px`
+    host.style.overflow = 'hidden'
+    host.innerHTML = html
+
+    try {
+      const canvas = await html2canvas(host, {
+        scale: RENDER_SCALE,
+        backgroundColor: '#ffffff',
+        logging: false,
+        windowWidth: widthPx,
+      })
+      const blob = await canvasToBlob(canvas, 'image/jpeg', 0.92)
+      const image = await pdf.embedJpg(await blob.arrayBuffer())
+      const page = pdf.addPage([widthPx * PX_TO_PT, heightPx * PX_TO_PT])
+      page.drawImage(image, {
+        x: 0,
+        y: 0,
+        width: widthPx * PX_TO_PT,
+        height: heightPx * PX_TO_PT,
+      })
+      canvas.width = 0
+      canvas.height = 0
+    } finally {
+      host.remove()
+    }
+
+    onProgress?.((index + 1) / pages.length)
+  }
+
+  const saved = await pdf.save()
+  return new Blob([saved as BlobPart], { type: 'application/pdf' })
+}
+
 export async function htmlToPdf(
   html: string,
   options: HtmlToPdfOptions,
