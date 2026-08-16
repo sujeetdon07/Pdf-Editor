@@ -182,9 +182,9 @@ export default function EditPdf() {
                 onChange={(event) => setText(event.target.value)}
                 rows={3}
                 placeholder="Text to place"
-                className="w-full rounded-xl border border-paper-300 bg-paper-50 p-3 text-sm text-ink-900 outline-none focus:border-rust-500"
+                className="w-full rounded-xl border border-ink-800 bg-ink-950 p-3 text-sm text-white outline-none focus:border-iris-500"
               />
-              <label className="flex items-center justify-between text-sm text-ink-700">
+              <label className="flex items-center justify-between text-sm text-ink-300">
                 Size
                 <input
                   type="number"
@@ -192,7 +192,7 @@ export default function EditPdf() {
                   max={96}
                   value={size}
                   onChange={(event) => setSize(Number(event.target.value) || 16)}
-                  className="w-20 rounded-lg border border-paper-300 bg-paper-50 px-2 py-1 text-right text-ink-900 outline-none focus:border-rust-500"
+                  className="w-20 rounded-lg border border-ink-800 bg-ink-950 px-2 py-1 text-right text-white outline-none focus:border-iris-500"
                 />
               </label>
             </div>
@@ -207,7 +207,7 @@ export default function EditPdf() {
                   aria-label={`Use ${swatch}`}
                   onClick={() => setColor(swatch)}
                   style={{ background: swatch }}
-                  className={`h-7 w-7 rounded-full border-2 ${color === swatch ? 'border-ink-900' : 'border-paper-300'}`}
+                  className={`h-7 w-7 rounded-full border-2 ${color === swatch ? 'border-white' : 'border-ink-800'}`}
                 />
               ))}
             </div>
@@ -263,7 +263,7 @@ export default function EditPdf() {
         {file ? (
           <div className="panel flex items-center justify-between gap-4 p-5">
             <div className="min-w-0">
-              <p className="truncate font-medium text-ink-900">{file.name}</p>
+              <p className="truncate font-medium text-white">{file.name}</p>
               <p className="text-sm text-ink-500">
                 {formatBytes(file.size)} · {previews.length} pages
               </p>
@@ -292,7 +292,7 @@ export default function EditPdf() {
 
         {isLoading ? <p className="text-sm text-ink-500">Rendering pages…</p> : null}
         {isWorking ? <ProgressBar ratio={progress} label="Stamping pages…" /> : null}
-        {error ? <p className="text-sm text-red-700">{error}</p> : null}
+        {error ? <p className="text-sm text-red-400">{error}</p> : null}
 
         {preview ? (
           <>
@@ -306,7 +306,7 @@ export default function EditPdf() {
                 >
                   ‹ Previous
                 </button>
-                <span className="text-sm text-ink-700">
+                <span className="text-sm text-ink-300">
                   Page {page} of {previews.length}
                 </span>
                 <button
@@ -328,7 +328,7 @@ export default function EditPdf() {
               onPointerDown={down}
               onPointerMove={move}
               onPointerUp={up}
-              className="relative mx-auto w-full max-w-3xl cursor-crosshair select-none overflow-hidden rounded-xl border border-paper-300 bg-white"
+              className="relative mx-auto w-full max-w-3xl cursor-crosshair select-none overflow-hidden rounded-xl border border-ink-800 bg-white"
               style={{ aspectRatio: `${preview.width} / ${preview.height}` }}
             >
               <img src={preview.url} alt={`Page ${page}`} className="pointer-events-none w-full" />
@@ -367,7 +367,7 @@ export default function EditPdf() {
 
               {drag ? (
                 <span
-                  className="pointer-events-none absolute border-2 border-dashed border-rust-400"
+                  className="pointer-events-none absolute border-2 border-dashed border-iris-400"
                   style={{
                     left: `${Math.min(drag.x, drag.toX) * 100}%`,
                     top: `${Math.min(drag.y, drag.toY) * 100}%`,

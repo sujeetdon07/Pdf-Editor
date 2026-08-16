@@ -9,27 +9,23 @@ body,
 }
 
 body {
-  @apply bg-paper-50 font-sans text-ink-900 antialiased;
-  /* Faint rule pattern, like a sheet of graph paper under the tools. */
-  background-image:
-    linear-gradient(to bottom, rgba(184, 168, 140, 0.16) 1px, transparent 1px);
-  background-size: 100% 2.25rem;
+  @apply bg-ink-950 bg-aurora bg-no-repeat font-sans text-ink-100 antialiased;
 }
 
 @layer components {
   .panel {
-    @apply rounded-2xl border border-paper-300 bg-white/85 shadow-panel backdrop-blur;
+    @apply rounded-2xl border border-ink-800 bg-ink-900/70 backdrop-blur;
   }
 
   .btn-primary {
-    @apply rounded-xl bg-rust-500 px-5 py-3 font-semibold text-white shadow-glow transition hover:bg-rust-400 disabled:cursor-not-allowed disabled:bg-paper-200 disabled:text-ink-500 disabled:shadow-none;
+    @apply rounded-xl bg-iris-500 px-5 py-3 font-semibold text-white shadow-glow transition hover:bg-iris-400 disabled:cursor-not-allowed disabled:bg-ink-800 disabled:text-ink-500 disabled:shadow-none;
   }
 
   .btn-ghost {
-    @apply rounded-xl border border-paper-400 px-4 py-2 text-sm font-medium text-ink-700 transition hover:border-rust-500 hover:text-ink-900;
+    @apply rounded-xl border border-ink-700 px-4 py-2 text-sm font-medium text-ink-300 transition hover:border-iris-500 hover:text-white;
   }
 
   .field {
-    @apply w-full rounded-xl border border-paper-400 bg-white px-3 py-2 text-sm text-ink-900 outline-none transition placeholder:text-ink-500 focus:border-rust-500;
+    @apply w-full rounded-xl border border-ink-700 bg-ink-950 px-3 py-2 text-sm text-ink-100 outline-none transition placeholder:text-ink-500 focus:border-iris-500;
   }
 }

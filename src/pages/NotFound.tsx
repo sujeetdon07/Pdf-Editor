@@ -14,10 +14,10 @@ export default function NotFound() {
 
   return (
     <div className="max-w-2xl">
-      <h1 className="font-display text-2xl font-bold text-ink-900 sm:text-3xl">Page not found</h1>
-      <p className="mt-2 text-sm text-ink-700">
+      <h1 className="font-display text-2xl font-bold text-white sm:text-3xl">Page not found</h1>
+      <p className="mt-2 text-sm text-ink-300">
         That address does not exist. Pick a tool below, or go back{' '}
-        <Link to="/" className="text-rust-600 underline underline-offset-4">
+        <Link to="/" className="text-iris-300 underline underline-offset-4">
           home
         </Link>
         .
@@ -27,7 +27,7 @@ export default function NotFound() {
           <li key={tool.path}>
             <Link
               to={tool.path}
-              className="inline-block rounded-full border border-paper-400 px-3 py-1 text-xs text-ink-700 transition hover:border-rust-500/60 hover:text-ink-900"
+              className="inline-block rounded-full border border-ink-700 px-3 py-1 text-xs text-ink-300 transition hover:border-iris-500/60 hover:text-white"
             >
               {tool.heading}
             </Link>

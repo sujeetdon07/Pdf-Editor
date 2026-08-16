@@ -129,7 +129,7 @@ export default function CompressPdf() {
         <div className="panel p-6">
           <div className="flex items-center justify-between gap-4">
             <div className="min-w-0">
-              <p className="truncate font-medium text-ink-900">{file.name}</p>
+              <p className="truncate font-medium text-white">{file.name}</p>
               <p className="text-sm text-ink-500">{formatBytes(file.size)}</p>
             </div>
             <button
@@ -155,23 +155,23 @@ export default function CompressPdf() {
           ) : null}
 
           {result ? (
-            <div className="mt-6 rounded-xl border border-paper-300 bg-paper-50/60 p-4">
+            <div className="mt-6 rounded-xl border border-ink-800 bg-ink-950/60 p-4">
               {result.keptOriginal ? (
-                <p className="text-sm text-ink-700">
+                <p className="text-sm text-ink-300">
                   This PDF is already well optimised — re-encoding made it larger, so the original
                   file is offered unchanged.
                 </p>
               ) : (
-                <p className="text-sm text-ink-700">
+                <p className="text-sm text-ink-300">
                   {formatBytes(result.originalSize)} → {formatBytes(result.compressedSize)}{' '}
-                  <span className="font-semibold text-moss-600">({savings}% smaller)</span>
+                  <span className="font-semibold text-mint-400">({savings}% smaller)</span>
                   <span className="ml-2 text-ink-500">
                     at {result.dpi} DPI · quality {Math.round(result.quality * 100)}%
                   </span>
                 </p>
               )}
               {!result.reachedTarget ? (
-                <p className="mt-2 text-sm text-amber-700">
+                <p className="mt-2 text-sm text-amber-400">
                   Could not reach {formatBytes(targetBytes)} — this is the smallest result at the
                   lowest quality setting.
                 </p>
@@ -188,7 +188,7 @@ export default function CompressPdf() {
             </div>
           ) : null}
 
-          {error ? <p className="mt-4 text-sm text-red-700">{error}</p> : null}
+          {error ? <p className="mt-4 text-sm text-red-400">{error}</p> : null}
         </div>
       ) : (
         <Dropzone

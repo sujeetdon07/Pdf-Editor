@@ -71,10 +71,10 @@ export default function ExcelToPdf() {
               { value: 'portrait', label: 'Portrait' },
             ]}
           />
-          <label className="mb-5 flex items-center gap-2 text-sm text-ink-700">
+          <label className="mb-5 flex items-center gap-2 text-sm text-ink-300">
             <input
               type="checkbox"
-              className="accent-rust-500"
+              className="accent-iris-500"
               checked={headerRow}
               onChange={(event) => setHeaderRow(event.target.checked)}
             />
@@ -100,13 +100,13 @@ export default function ExcelToPdf() {
         />
 
         {isWorking ? <ProgressBar ratio={progress} label="Rendering pages…" /> : null}
-        {error ? <p className="text-sm text-red-700">{error}</p> : null}
+        {error ? <p className="text-sm text-red-400">{error}</p> : null}
 
         {file ? (
           <div className="panel p-5">
             <div className="flex items-center justify-between gap-4">
               <div className="min-w-0">
-                <p className="truncate font-medium text-ink-900">{file.name}</p>
+                <p className="truncate font-medium text-white">{file.name}</p>
                 <p className="text-sm text-ink-500">{formatBytes(file.size)}</p>
               </div>
               <button
@@ -122,9 +122,9 @@ export default function ExcelToPdf() {
             </div>
 
             {pdf ? (
-              <div className="mt-5 rounded-xl border border-paper-300 bg-paper-50 p-4">
-                <p className="text-sm text-ink-700">
-                  PDF ready · <span className="text-ink-900">{formatBytes(pdf.size)}</span>
+              <div className="mt-5 rounded-xl border border-ink-800 bg-ink-950 p-4">
+                <p className="text-sm text-ink-300">
+                  PDF ready · <span className="text-white">{formatBytes(pdf.size)}</span>
                 </p>
                 <button
                   type="button"

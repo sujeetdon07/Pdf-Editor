@@ -28,7 +28,7 @@ export default function Dropzone({ accept, multiple, label, hint, onFiles }: Dro
       onDragLeave={() => setIsDragging(false)}
       onDrop={handleDrop}
       className={`rounded-2xl border border-dashed p-10 text-center transition ${
-        isDragging ? 'border-moss-400 bg-moss-400/10' : 'border-paper-400 bg-white/50'
+        isDragging ? 'border-mint-400 bg-mint-400/10' : 'border-ink-700 bg-ink-900/50'
       }`}
     >
       <input

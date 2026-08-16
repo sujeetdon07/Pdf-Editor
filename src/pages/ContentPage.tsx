@@ -19,18 +19,18 @@ export default function ContentPage() {
         schema={pageSchema(page)}
       />
 
-      <div className="mb-8 border-l-2 border-rust-500 pl-4">
-        <h1 className="font-display text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
+      <div className="mb-8 border-l-2 border-iris-500 pl-4">
+        <h1 className="font-display text-2xl font-bold tracking-tight text-white sm:text-3xl">
           {page.heading}
         </h1>
-        <p className="mt-1 text-sm text-ink-700">{page.description}</p>
+        <p className="mt-1 text-sm text-ink-300">{page.description}</p>
       </div>
 
       {page.sections?.map((section) => (
         <section key={section.heading} className="mb-8">
-          <h2 className="font-display text-lg font-bold text-ink-900">{section.heading}</h2>
+          <h2 className="font-display text-lg font-bold text-white">{section.heading}</h2>
           {section.body.map((paragraph) => (
-            <p key={paragraph} className="mt-3 text-sm leading-relaxed text-ink-700">
+            <p key={paragraph} className="mt-3 text-sm leading-relaxed text-ink-300">
               {paragraph}
             </p>
           ))}

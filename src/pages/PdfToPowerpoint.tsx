@@ -58,7 +58,7 @@ export default function PdfToPowerpoint() {
               { value: '220', label: '220 DPI', description: 'Sharpest' },
             ]}
           />
-          <p className="mb-5 text-sm text-ink-700">
+          <p className="mb-5 text-sm text-ink-300">
             Pages become slide images, so the deck looks exactly like the PDF — text on the slides
             is not separately editable.
           </p>
@@ -82,13 +82,13 @@ export default function PdfToPowerpoint() {
         />
 
         {isWorking ? <ProgressBar ratio={progress} label="Building slides…" /> : null}
-        {error ? <p className="text-sm text-red-700">{error}</p> : null}
+        {error ? <p className="text-sm text-red-400">{error}</p> : null}
 
         {file ? (
           <div className="panel p-5">
             <div className="flex items-center justify-between gap-4">
               <div className="min-w-0">
-                <p className="truncate font-medium text-ink-900">{file.name}</p>
+                <p className="truncate font-medium text-white">{file.name}</p>
                 <p className="text-sm text-ink-500">{formatBytes(file.size)}</p>
               </div>
               <button
@@ -104,10 +104,10 @@ export default function PdfToPowerpoint() {
             </div>
 
             {result ? (
-              <div className="mt-5 rounded-xl border border-paper-300 bg-paper-50 p-4">
-                <p className="text-sm text-ink-700">
+              <div className="mt-5 rounded-xl border border-ink-800 bg-ink-950 p-4">
+                <p className="text-sm text-ink-300">
                   {result.slideCount} slide{result.slideCount > 1 ? 's' : ''} ·{' '}
-                  <span className="text-ink-900">{formatBytes(result.blob.size)}</span>
+                  <span className="text-white">{formatBytes(result.blob.size)}</span>
                 </p>
                 <button
                   type="button"

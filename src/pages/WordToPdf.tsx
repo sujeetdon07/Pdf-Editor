@@ -90,13 +90,13 @@ export default function WordToPdf() {
         />
 
         {isWorking ? <ProgressBar ratio={progress} label="Rendering pages…" /> : null}
-        {error ? <p className="text-sm text-red-700">{error}</p> : null}
+        {error ? <p className="text-sm text-red-400">{error}</p> : null}
 
         {file ? (
           <div className="panel p-5">
             <div className="flex items-center justify-between gap-4">
               <div className="min-w-0">
-                <p className="truncate font-medium text-ink-900">{file.name}</p>
+                <p className="truncate font-medium text-white">{file.name}</p>
                 <p className="text-sm text-ink-500">{formatBytes(file.size)}</p>
               </div>
               <button
@@ -113,9 +113,9 @@ export default function WordToPdf() {
             </div>
 
             {pdf ? (
-              <div className="mt-5 rounded-xl border border-paper-300 bg-paper-50 p-4">
-                <p className="text-sm text-ink-700">
-                  PDF ready · <span className="text-ink-900">{formatBytes(pdf.size)}</span>
+              <div className="mt-5 rounded-xl border border-ink-800 bg-ink-950 p-4">
+                <p className="text-sm text-ink-300">
+                  PDF ready · <span className="text-white">{formatBytes(pdf.size)}</span>
                 </p>
                 <button
                   type="button"
@@ -125,7 +125,7 @@ export default function WordToPdf() {
                   Download PDF
                 </button>
                 {warnings.length > 0 ? (
-                  <p className="mt-3 text-xs text-amber-700">
+                  <p className="mt-3 text-xs text-amber-400">
                     {warnings.length} formatting note{warnings.length > 1 ? 's' : ''}:{' '}
                     {warnings.slice(0, 3).join('; ')}
                   </p>
