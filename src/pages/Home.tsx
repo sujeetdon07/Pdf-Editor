@@ -37,6 +37,24 @@ const TOOLS = [
     description: 'Fix orientation page by page with live thumbnails.',
     tag: 'Per page',
   },
+  {
+    to: '/word-to-pdf',
+    title: 'Word → PDF',
+    description: 'Lay out a .docx as a paginated PDF, in any script or language.',
+    tag: 'Any language',
+  },
+  {
+    to: '/excel-to-pdf',
+    title: 'Excel → PDF',
+    description: 'Print .xlsx or .csv sheets as clean tables, one section per sheet.',
+    tag: 'All sheets',
+  },
+  {
+    to: '/pdf-to-word',
+    title: 'PDF → Word',
+    description: 'Recover the text of a PDF as an editable .docx you can keep working in.',
+    tag: 'Editable',
+  },
 ]
 
 export default function Home() {
@@ -53,8 +71,8 @@ export default function Home() {
           never sees your files.
         </h1>
         <p className="mt-4 max-w-xl text-ink-300">
-          Six precise tools built on WebAssembly-era browser APIs. Set a target file size, choose an
-          export DPI, and keep every byte on your own machine.
+          Nine precise tools built on modern browser APIs. Convert Office documents, set a target
+          file size, choose an export DPI — and keep every byte on your own machine.
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
           <Link to="/compress-pdf" className="btn-primary">

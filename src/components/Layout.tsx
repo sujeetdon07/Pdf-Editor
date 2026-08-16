@@ -1,13 +1,28 @@
 import { Link, NavLink, Outlet } from 'react-router-dom'
 
-const NAV = [
-  { to: '/compress-pdf', label: 'Compress', glyph: '⤓' },
-  { to: '/jpg-to-pdf', label: 'Image → PDF', glyph: '▣' },
-  { to: '/pdf-to-jpg', label: 'PDF → Image', glyph: '◫' },
-  { to: '/merge-pdf', label: 'Merge', glyph: '⧉' },
-  { to: '/split-pdf', label: 'Split', glyph: '⑂' },
-  { to: '/rotate-pdf', label: 'Rotate', glyph: '↻' },
+const GROUPS = [
+  {
+    label: 'Workbench',
+    items: [
+      { to: '/compress-pdf', label: 'Compress', glyph: '⤓' },
+      { to: '/merge-pdf', label: 'Merge', glyph: '⧉' },
+      { to: '/split-pdf', label: 'Split', glyph: '⑂' },
+      { to: '/rotate-pdf', label: 'Rotate', glyph: '↻' },
+    ],
+  },
+  {
+    label: 'Convert',
+    items: [
+      { to: '/jpg-to-pdf', label: 'Image → PDF', glyph: '▣' },
+      { to: '/pdf-to-jpg', label: 'PDF → Image', glyph: '◫' },
+      { to: '/word-to-pdf', label: 'Word → PDF', glyph: '¶' },
+      { to: '/excel-to-pdf', label: 'Excel → PDF', glyph: '▤' },
+      { to: '/pdf-to-word', label: 'PDF → Word', glyph: '✎' },
+    ],
+  },
 ]
+
+const FLAT_NAV = GROUPS.flatMap((group) => group.items)
 
 function navLinkClass({ isActive }: { isActive: boolean }) {
   return `flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium transition ${
@@ -33,17 +48,21 @@ export default function Layout() {
     <div className="min-h-full lg:grid lg:grid-cols-[248px_1fr]">
       <aside className="hidden border-r border-ink-800 bg-ink-900/60 lg:flex lg:h-screen lg:sticky lg:top-0 lg:flex-col lg:gap-8 lg:px-5 lg:py-6">
         <Wordmark />
-        <nav className="flex flex-col gap-1">
-          <p className="px-3 pb-2 text-xs font-semibold uppercase tracking-widest text-ink-500">
-            Workbench
-          </p>
-          {NAV.map((item) => (
-            <NavLink key={item.to} to={item.to} className={navLinkClass}>
-              <span aria-hidden className="text-base text-iris-300">
-                {item.glyph}
-              </span>
-              {item.label}
-            </NavLink>
+        <nav className="flex flex-col gap-5">
+          {GROUPS.map((group) => (
+            <div key={group.label} className="flex flex-col gap-1">
+              <p className="px-3 pb-2 text-xs font-semibold uppercase tracking-widest text-ink-500">
+                {group.label}
+              </p>
+              {group.items.map((item) => (
+                <NavLink key={item.to} to={item.to} className={navLinkClass}>
+                  <span aria-hidden className="text-base text-iris-300">
+                    {item.glyph}
+                  </span>
+                  {item.label}
+                </NavLink>
+              ))}
+            </div>
           ))}
         </nav>
         <div className="mt-auto rounded-xl border border-ink-800 bg-ink-950/60 p-3 text-xs leading-relaxed text-ink-300">
@@ -58,7 +77,7 @@ export default function Layout() {
             <Wordmark />
           </div>
           <nav className="flex gap-1 overflow-x-auto px-3 pb-3">
-            {NAV.map((item) => (
+            {FLAT_NAV.map((item) => (
               <NavLink key={item.to} to={item.to} className={navLinkClass}>
                 <span className="whitespace-nowrap">{item.label}</span>
               </NavLink>
