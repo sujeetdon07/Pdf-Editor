@@ -8,10 +8,15 @@ A private PDF workbench that runs entirely in the browser — no server, no uplo
 - **Merge PDF** — concatenates several PDFs in a reorderable list.
 - **Split PDF** — extracts custom page ranges (`1-3, 5`) or splits every page into its own PDF, downloadable individually or as a ZIP.
 - **Rotate PDF** — page thumbnails with per-page or whole-document rotation, applied on top of each page's existing rotation.
+- **Word to PDF** — `.docx` converted to HTML with Mammoth, laid out by the browser and paginated into A4/Letter pages.
+- **Excel to PDF** — `.xlsx`, `.xlsm` and `.csv` rendered as one titled table per sheet, with an optional header row and numeric alignment.
+- **PDF to Word** — extracts selectable text with pdf.js and rebuilds it as an editable `.docx` (headings inferred from font size). Scanned PDFs have no text layer and would need OCR.
+
+Word and Excel pages are rendered by the browser's own text engine, so CJK, Devanagari, Arabic, Cyrillic and other scripts come out correctly without embedding fonts; the resulting PDF pages are images rather than selectable text.
 
 ## Stack
 
-React + TypeScript + Vite, Tailwind CSS (dark "aurora" theme, Space Grotesk + Inter), [pdf-lib](https://pdf-lib.js.org/) for writing PDFs, [pdf.js](https://mozilla.github.io/pdf.js/) for rendering, JSZip for archives.
+React + TypeScript + Vite, Tailwind CSS (dark "aurora" theme, Space Grotesk + Inter), [pdf-lib](https://pdf-lib.js.org/) for writing PDFs, [pdf.js](https://mozilla.github.io/pdf.js/) for rendering, JSZip for archives, Mammoth (`.docx` → HTML), ExcelJS (spreadsheets), html2canvas (page rasterisation) and `docx` (Word output).
 
 ## Development
 
