@@ -1,7 +1,10 @@
 import { Suspense, lazy } from 'react'
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout'
 import Home from './pages/Home'
+import ContentPage from './pages/ContentPage'
+import NotFound from './pages/NotFound'
+import { PAGES } from './content/site'
 
 const CompressPdf = lazy(() => import('./pages/CompressPdf'))
 const ImageToPdf = lazy(() => import('./pages/ImageToPdf'))
@@ -40,7 +43,10 @@ export default function App() {
           <Route path="powerpoint-to-pdf" element={<PowerpointToPdf />} />
           <Route path="pdf-to-powerpoint" element={<PdfToPowerpoint />} />
           <Route path="edit-pdf" element={<EditPdf />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
+          {PAGES.map((page) => (
+            <Route key={page.path} path={page.path} element={<ContentPage />} />
+          ))}
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </Suspense>
