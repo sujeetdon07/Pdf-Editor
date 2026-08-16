@@ -45,16 +45,16 @@ export default function PdfToExcel() {
       description="Turn the tables in a PDF into a workbook: one sheet per page, with columns worked out from where the text sits on the page."
       sidebar={
         <>
-          <label className="mb-5 flex items-center gap-2 text-sm text-ink-300">
+          <label className="mb-5 flex items-center gap-2 text-sm text-ink-700">
             <input
               type="checkbox"
-              className="accent-iris-500"
+              className="accent-rust-500"
               checked={numbersAsValues}
               onChange={(event) => setNumbersAsValues(event.target.checked)}
             />
             Store numbers as numbers
           </label>
-          <p className="mb-5 text-sm text-ink-300">
+          <p className="mb-5 text-sm text-ink-700">
             Works on PDFs with real text. Scanned pages hold images rather than text and need OCR
             instead.
           </p>
@@ -78,13 +78,13 @@ export default function PdfToExcel() {
         />
 
         {isWorking ? <ProgressBar ratio={progress} label="Reading tables…" /> : null}
-        {error ? <p className="text-sm text-red-400">{error}</p> : null}
+        {error ? <p className="text-sm text-red-700">{error}</p> : null}
 
         {file ? (
           <div className="panel p-5">
             <div className="flex items-center justify-between gap-4">
               <div className="min-w-0">
-                <p className="truncate font-medium text-white">{file.name}</p>
+                <p className="truncate font-medium text-ink-900">{file.name}</p>
                 <p className="text-sm text-ink-500">{formatBytes(file.size)}</p>
               </div>
               <button
@@ -100,11 +100,11 @@ export default function PdfToExcel() {
             </div>
 
             {result ? (
-              <div className="mt-5 rounded-xl border border-ink-800 bg-ink-950 p-4">
-                <p className="text-sm text-ink-300">
+              <div className="mt-5 rounded-xl border border-paper-300 bg-paper-50 p-4">
+                <p className="text-sm text-ink-700">
                   {result.pageCount} sheet{result.pageCount > 1 ? 's' : ''} ·{' '}
                   {result.rowCount.toLocaleString()} rows ·{' '}
-                  <span className="text-white">{formatBytes(result.blob.size)}</span>
+                  <span className="text-ink-900">{formatBytes(result.blob.size)}</span>
                 </p>
                 <button
                   type="button"

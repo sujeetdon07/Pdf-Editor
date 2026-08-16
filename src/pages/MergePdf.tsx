@@ -68,7 +68,7 @@ export default function MergePdf() {
       description="Combine several PDFs into a single document, in the order you choose."
       sidebar={
         <>
-          <p className="mb-4 text-sm text-ink-300">
+          <p className="mb-4 text-sm text-ink-700">
             {items.length} file{items.length === 1 ? '' : 's'} selected
           </p>
           <button
@@ -101,7 +101,7 @@ export default function MergePdf() {
         />
 
         {isWorking ? <ProgressBar ratio={progress} /> : null}
-        {error ? <p className="text-sm text-red-400">{error}</p> : null}
+        {error ? <p className="text-sm text-red-700">{error}</p> : null}
 
         {items.length > 0 ? (
           <ol className="space-y-2">
@@ -110,17 +110,17 @@ export default function MergePdf() {
                 key={item.id}
                 className="flex items-center gap-3 panel p-3"
               >
-                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-ink-800 text-sm font-semibold text-iris-300">
+                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-paper-200 text-sm font-semibold text-rust-600">
                   {index + 1}
                 </span>
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-medium text-white">{item.file.name}</p>
+                  <p className="truncate text-sm font-medium text-ink-900">{item.file.name}</p>
                   <p className="text-xs text-ink-500">{formatBytes(item.file.size)}</p>
                 </div>
                 <button
                   type="button"
                   onClick={() => move(index, -1)}
-                  className="rounded px-2 py-1 text-sm text-ink-300 hover:bg-ink-800 hover:text-white"
+                  className="rounded px-2 py-1 text-sm text-ink-700 hover:bg-paper-200 hover:text-ink-900"
                   aria-label="Move up"
                 >
                   ↑
@@ -128,7 +128,7 @@ export default function MergePdf() {
                 <button
                   type="button"
                   onClick={() => move(index, 1)}
-                  className="rounded px-2 py-1 text-sm text-ink-300 hover:bg-ink-800 hover:text-white"
+                  className="rounded px-2 py-1 text-sm text-ink-700 hover:bg-paper-200 hover:text-ink-900"
                   aria-label="Move down"
                 >
                   ↓

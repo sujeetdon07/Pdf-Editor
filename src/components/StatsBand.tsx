@@ -48,14 +48,14 @@ function Counter({
 }) {
   const animated = useCountUp(value, start)
   return (
-    <div className="rounded-2xl border border-ink-800 bg-ink-950/60 p-5">
-      <p className="font-display text-3xl font-bold tabular-nums text-white sm:text-4xl">
+    <div className="rounded-2xl border border-paper-300 bg-paper-50/60 p-5">
+      <p className="font-display text-3xl font-bold tabular-nums text-ink-900 sm:text-4xl">
         {/* Screen readers get the settled figure; the animation is decorative. */}
         <span className="sr-only">{format(value)}</span>
         <span aria-hidden>{format(animated)}</span>
       </p>
-      <p className="mt-2 text-sm font-semibold text-ink-100">{label}</p>
-      <p className="mt-1 text-xs leading-relaxed text-ink-300">{note}</p>
+      <p className="mt-2 text-sm font-semibold text-ink-900">{label}</p>
+      <p className="mt-1 text-xs leading-relaxed text-ink-700">{note}</p>
     </div>
   )
 }
@@ -102,11 +102,11 @@ export default function StatsBand() {
   }, [])
 
   return (
-    <section ref={ref} aria-label="Usage" className="border-t border-ink-800">
+    <section ref={ref} aria-label="Usage" className="border-t border-paper-300">
       <div className="mx-auto w-full max-w-5xl px-4 py-12 sm:px-8">
         <div className="panel p-6 sm:p-8">
-          <h2 className="font-display text-xl font-bold text-white">CelloPDF in your browser</h2>
-          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-ink-300">
+          <h2 className="font-display text-xl font-bold text-ink-900">CelloPDF in your browser</h2>
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-ink-700">
             These counters live on your device, not on a server — we have no way to watch what you
             convert, so the only usage we can honestly show is your own.
           </p>
