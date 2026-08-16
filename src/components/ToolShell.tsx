@@ -10,19 +10,15 @@ interface ToolShellProps {
 export default function ToolShell({ title, description, children, sidebar }: ToolShellProps) {
   return (
     <div>
-      <div className="mb-8 text-center">
-        <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+      <div className="mb-8 border-l-2 border-iris-500 pl-4">
+        <h1 className="font-display text-2xl font-bold tracking-tight text-white sm:text-3xl">
           {title}
         </h1>
-        <p className="mx-auto mt-2 max-w-2xl text-slate-600">{description}</p>
+        <p className="mt-1 max-w-2xl text-sm text-ink-300">{description}</p>
       </div>
-      <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
+      <div className="grid gap-6 lg:grid-cols-[1fr_300px]">
         <div>{children}</div>
-        {sidebar ? (
-          <aside className="h-fit rounded-2xl border border-slate-200 bg-white p-5">
-            {sidebar}
-          </aside>
-        ) : null}
+        {sidebar ? <aside className="panel h-fit p-5">{sidebar}</aside> : null}
       </div>
     </div>
   )
@@ -43,27 +39,29 @@ export function OptionGroup<T extends string>({
 }: OptionGroupProps<T>) {
   return (
     <fieldset className="mb-5">
-      <legend className="mb-2 text-sm font-semibold text-slate-900">{legend}</legend>
+      <legend className="mb-2 text-xs font-semibold uppercase tracking-widest text-ink-500">
+        {legend}
+      </legend>
       <div className="space-y-2">
         {options.map((option) => (
           <label
             key={option.value}
             className={`flex cursor-pointer gap-3 rounded-xl border p-3 text-sm transition ${
               value === option.value
-                ? 'border-brand-500 bg-brand-50'
-                : 'border-slate-200 hover:border-slate-300'
+                ? 'border-iris-500 bg-iris-500/10'
+                : 'border-ink-800 hover:border-ink-700'
             }`}
           >
             <input
               type="radio"
-              className="mt-1 accent-brand-500"
+              className="mt-1 accent-iris-500"
               checked={value === option.value}
               onChange={() => onChange(option.value)}
             />
             <span>
-              <span className="block font-medium text-slate-900">{option.label}</span>
+              <span className="block font-medium text-white">{option.label}</span>
               {option.description ? (
-                <span className="block text-slate-500">{option.description}</span>
+                <span className="block text-ink-300">{option.description}</span>
               ) : null}
             </span>
           </label>
@@ -73,13 +71,16 @@ export function OptionGroup<T extends string>({
   )
 }
 
-export function ProgressBar({ ratio }: { ratio: number }) {
+export function ProgressBar({ ratio, label }: { ratio: number; label?: string }) {
   return (
-    <div className="h-2 w-full overflow-hidden rounded-full bg-slate-200">
-      <div
-        className="h-full rounded-full bg-brand-500 transition-all"
-        style={{ width: `${Math.round(ratio * 100)}%` }}
-      />
+    <div>
+      {label ? <p className="mb-2 text-xs text-ink-300">{label}</p> : null}
+      <div className="h-1.5 w-full overflow-hidden rounded-full bg-ink-800">
+        <div
+          className="h-full rounded-full bg-gradient-to-r from-iris-500 to-mint-400 transition-all"
+          style={{ width: `${Math.round(ratio * 100)}%` }}
+        />
+      </div>
     </div>
   )
 }

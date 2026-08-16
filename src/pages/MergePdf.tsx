@@ -68,14 +68,14 @@ export default function MergePdf() {
       description="Combine several PDFs into a single document, in the order you choose."
       sidebar={
         <>
-          <p className="mb-4 text-sm text-slate-600">
+          <p className="mb-4 text-sm text-ink-300">
             {items.length} file{items.length === 1 ? '' : 's'} selected
           </p>
           <button
             type="button"
             disabled={items.length < 2 || isWorking}
             onClick={run}
-            className="w-full rounded-xl bg-brand-500 px-4 py-3 font-semibold text-white transition hover:bg-brand-600 disabled:cursor-not-allowed disabled:bg-slate-300"
+            className="btn-primary w-full"
           >
             {isWorking ? 'Merging…' : 'Merge PDFs'}
           </button>
@@ -83,7 +83,7 @@ export default function MergePdf() {
             <button
               type="button"
               onClick={() => downloadBlob(merged, 'merged.pdf')}
-              className="mt-3 w-full rounded-xl bg-slate-900 px-4 py-3 font-semibold text-white hover:bg-slate-700"
+              className="btn-ghost mt-3 w-full py-3"
             >
               Download PDF ({formatBytes(merged.size)})
             </button>
@@ -101,26 +101,26 @@ export default function MergePdf() {
         />
 
         {isWorking ? <ProgressBar ratio={progress} /> : null}
-        {error ? <p className="text-sm text-red-600">{error}</p> : null}
+        {error ? <p className="text-sm text-red-400">{error}</p> : null}
 
         {items.length > 0 ? (
           <ol className="space-y-2">
             {items.map((item, index) => (
               <li
                 key={item.id}
-                className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-3"
+                className="flex items-center gap-3 panel p-3"
               >
-                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-slate-100 text-sm font-semibold">
+                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-ink-800 text-sm font-semibold text-iris-300">
                   {index + 1}
                 </span>
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-medium text-slate-900">{item.file.name}</p>
-                  <p className="text-xs text-slate-500">{formatBytes(item.file.size)}</p>
+                  <p className="truncate text-sm font-medium text-white">{item.file.name}</p>
+                  <p className="text-xs text-ink-500">{formatBytes(item.file.size)}</p>
                 </div>
                 <button
                   type="button"
                   onClick={() => move(index, -1)}
-                  className="rounded px-2 py-1 text-sm hover:bg-slate-100"
+                  className="rounded px-2 py-1 text-sm text-ink-300 hover:bg-ink-800 hover:text-white"
                   aria-label="Move up"
                 >
                   ↑
@@ -128,7 +128,7 @@ export default function MergePdf() {
                 <button
                   type="button"
                   onClick={() => move(index, 1)}
-                  className="rounded px-2 py-1 text-sm hover:bg-slate-100"
+                  className="rounded px-2 py-1 text-sm text-ink-300 hover:bg-ink-800 hover:text-white"
                   aria-label="Move down"
                 >
                   ↓
@@ -139,7 +139,7 @@ export default function MergePdf() {
                     setMerged(null)
                     setItems((current) => current.filter((c) => c.id !== item.id))
                   }}
-                  className="text-sm font-medium text-slate-500 hover:text-brand-600"
+                  className="btn-ghost"
                 >
                   Remove
                 </button>

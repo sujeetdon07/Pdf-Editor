@@ -3,7 +3,11 @@ import { canvasToBlob, loadPdf, renderPageToCanvas } from './pdfjs'
 import { stripExtension } from './files'
 
 export type ImageFormat = 'png' | 'jpeg'
-export type ImageQuality = 'normal' | 'high'
+
+/** PDF user space is 72 units per inch, so scale = dpi / 72. */
+export const BASE_DPI = 72
+export const MIN_DPI = 36
+export const MAX_DPI = 600
 
 export interface RenderedPage {
   pageNumber: number
@@ -14,12 +18,15 @@ export interface RenderedPage {
   height: number
 }
 
-const SCALES: Record<ImageQuality, number> = { normal: 1.5, high: 2.5 }
+export function clampDpi(dpi: number): number {
+  if (!Number.isFinite(dpi)) return 150
+  return Math.min(MAX_DPI, Math.max(MIN_DPI, Math.round(dpi)))
+}
 
 export async function pdfToImages(
   file: File,
   format: ImageFormat,
-  quality: ImageQuality,
+  dpi: number,
   onProgress?: (ratio: number) => void,
 ): Promise<RenderedPage[]> {
   const bytes = await file.arrayBuffer()
@@ -28,7 +35,7 @@ export async function pdfToImages(
   const pages: RenderedPage[] = []
 
   for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber += 1) {
-    const canvas = await renderPageToCanvas(pdf, pageNumber, SCALES[quality])
+    const canvas = await renderPageToCanvas(pdf, pageNumber, clampDpi(dpi) / BASE_DPI)
     const blob = await canvasToBlob(
       canvas,
       format === 'png' ? 'image/png' : 'image/jpeg',

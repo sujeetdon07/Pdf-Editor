@@ -27,8 +27,8 @@ export default function Dropzone({ accept, multiple, label, hint, onFiles }: Dro
       }}
       onDragLeave={() => setIsDragging(false)}
       onDrop={handleDrop}
-      className={`rounded-2xl border-2 border-dashed p-10 text-center transition ${
-        isDragging ? 'border-brand-500 bg-brand-50' : 'border-slate-300 bg-white'
+      className={`rounded-2xl border border-dashed p-10 text-center transition ${
+        isDragging ? 'border-mint-400 bg-mint-400/10' : 'border-ink-700 bg-ink-900/50'
       }`}
     >
       <input
@@ -46,11 +46,11 @@ export default function Dropzone({ accept, multiple, label, hint, onFiles }: Dro
       <button
         type="button"
         onClick={() => inputRef.current?.click()}
-        className="rounded-xl bg-brand-500 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-brand-600"
+        className="btn-primary"
       >
         {label}
       </button>
-      <p className="mt-3 text-sm text-slate-500">{hint}</p>
+      <p className="mt-3 text-sm text-ink-500">{hint}</p>
     </div>
   )
 }

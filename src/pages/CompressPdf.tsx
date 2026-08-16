@@ -1,26 +1,44 @@
 import { useState } from 'react'
 import Dropzone from '../components/Dropzone'
 import ToolShell, { OptionGroup, ProgressBar } from '../components/ToolShell'
-import { compressPdf, type CompressResult, type CompressionLevel } from '../lib/compressPdf'
+import {
+  compressPdf,
+  type CompressMode,
+  type CompressResult,
+  type CompressionLevel,
+} from '../lib/compressPdf'
 import { downloadBlob, formatBytes, stripExtension } from '../lib/files'
+
+type SizeUnit = 'KB' | 'MB'
 
 export default function CompressPdf() {
   const [file, setFile] = useState<File | null>(null)
+  const [mode, setMode] = useState<CompressMode>('level')
   const [level, setLevel] = useState<CompressionLevel>('recommended')
+  const [targetValue, setTargetValue] = useState('500')
+  const [targetUnit, setTargetUnit] = useState<SizeUnit>('KB')
   const [progress, setProgress] = useState(0)
   const [isWorking, setIsWorking] = useState(false)
   const [result, setResult] = useState<CompressResult | null>(null)
   const [error, setError] = useState<string | null>(null)
 
+  const targetBytes =
+    Number(targetValue) > 0
+      ? Math.round(Number(targetValue) * (targetUnit === 'MB' ? 1024 * 1024 : 1024))
+      : 0
+
   async function run() {
     if (!file) return
+    if (mode === 'target' && targetBytes <= 0) {
+      setError('Enter a target size greater than zero.')
+      return
+    }
     setIsWorking(true)
     setError(null)
     setResult(null)
     setProgress(0)
     try {
-      const compressed = await compressPdf(file, level, setProgress)
-      setResult(compressed)
+      setResult(await compressPdf(file, { mode, level, targetBytes }, setProgress))
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : 'Could not compress this PDF.')
     } finally {
@@ -36,40 +54,83 @@ export default function CompressPdf() {
   return (
     <ToolShell
       title="Compress PDF"
-      description="Reduce the size of your PDF by re-encoding each page."
+      description="Re-encode pages to shrink a document — either by quality preset or down to a size you choose."
       sidebar={
         <>
           <OptionGroup
-            legend="Compression level"
-            value={level}
-            onChange={setLevel}
+            legend="Mode"
+            value={mode}
+            onChange={(next) => {
+              setMode(next)
+              setResult(null)
+            }}
             options={[
-              { value: 'low', label: 'Less compression', description: 'Best quality' },
+              { value: 'level', label: 'Quality preset', description: 'One pass, predictable' },
               {
-                value: 'recommended',
-                label: 'Recommended',
-                description: 'Good balance of quality and size',
+                value: 'target',
+                label: 'Target file size',
+                description: 'Retries until it fits',
               },
-              { value: 'extreme', label: 'Extreme', description: 'Smallest file, lower quality' },
             ]}
           />
-          <button
-            type="button"
-            disabled={!file || isWorking}
-            onClick={run}
-            className="w-full rounded-xl bg-brand-500 px-4 py-3 font-semibold text-white transition hover:bg-brand-600 disabled:cursor-not-allowed disabled:bg-slate-300"
-          >
+
+          {mode === 'level' ? (
+            <OptionGroup
+              legend="Compression level"
+              value={level}
+              onChange={setLevel}
+              options={[
+                { value: 'low', label: 'Light', description: '150 DPI · best quality' },
+                { value: 'recommended', label: 'Balanced', description: '110 DPI · good all-round' },
+                { value: 'extreme', label: 'Aggressive', description: '72 DPI · smallest file' },
+              ]}
+            />
+          ) : (
+            <div className="mb-5">
+              <label
+                htmlFor="target-size"
+                className="mb-2 block text-xs font-semibold uppercase tracking-widest text-ink-500"
+              >
+                Target size
+              </label>
+              <div className="flex gap-2">
+                <input
+                  id="target-size"
+                  type="number"
+                  min={1}
+                  value={targetValue}
+                  onChange={(event) => setTargetValue(event.target.value)}
+                  className="field"
+                />
+                <select
+                  aria-label="Size unit"
+                  value={targetUnit}
+                  onChange={(event) => setTargetUnit(event.target.value as SizeUnit)}
+                  className="field w-24"
+                >
+                  <option value="KB">KB</option>
+                  <option value="MB">MB</option>
+                </select>
+              </div>
+              <p className="mt-2 text-xs text-ink-500">
+                Quality is lowered step by step until the file fits, so very small targets take
+                longer.
+              </p>
+            </div>
+          )}
+
+          <button type="button" disabled={!file || isWorking} onClick={run} className="btn-primary w-full">
             {isWorking ? 'Compressing…' : 'Compress PDF'}
           </button>
         </>
       }
     >
       {file ? (
-        <div className="rounded-2xl border border-slate-200 bg-white p-6">
+        <div className="panel p-6">
           <div className="flex items-center justify-between gap-4">
             <div className="min-w-0">
-              <p className="truncate font-medium text-slate-900">{file.name}</p>
-              <p className="text-sm text-slate-500">{formatBytes(file.size)}</p>
+              <p className="truncate font-medium text-white">{file.name}</p>
+              <p className="text-sm text-ink-500">{formatBytes(file.size)}</p>
             </div>
             <button
               type="button"
@@ -78,7 +139,7 @@ export default function CompressPdf() {
                 setResult(null)
                 setError(null)
               }}
-              className="text-sm font-medium text-slate-500 hover:text-brand-600"
+              className="btn-ghost"
             >
               Remove
             </button>
@@ -86,36 +147,48 @@ export default function CompressPdf() {
 
           {isWorking ? (
             <div className="mt-6">
-              <ProgressBar ratio={progress} />
+              <ProgressBar
+                ratio={progress}
+                label={mode === 'target' ? 'Searching for the best settings…' : undefined}
+              />
             </div>
           ) : null}
 
           {result ? (
-            <div className="mt-6 rounded-xl bg-slate-50 p-4">
+            <div className="mt-6 rounded-xl border border-ink-800 bg-ink-950/60 p-4">
               {result.keptOriginal ? (
-                <p className="text-sm text-slate-700">
+                <p className="text-sm text-ink-300">
                   This PDF is already well optimised — re-encoding made it larger, so the original
                   file is offered unchanged.
                 </p>
               ) : (
-                <p className="text-sm text-slate-700">
-                  {formatBytes(result.originalSize)} → {formatBytes(result.compressedSize)} (
-                  <span className="font-semibold text-green-600">{savings}% smaller</span>)
+                <p className="text-sm text-ink-300">
+                  {formatBytes(result.originalSize)} → {formatBytes(result.compressedSize)}{' '}
+                  <span className="font-semibold text-mint-400">({savings}% smaller)</span>
+                  <span className="ml-2 text-ink-500">
+                    at {result.dpi} DPI · quality {Math.round(result.quality * 100)}%
+                  </span>
                 </p>
               )}
+              {!result.reachedTarget ? (
+                <p className="mt-2 text-sm text-amber-400">
+                  Could not reach {formatBytes(targetBytes)} — this is the smallest result at the
+                  lowest quality setting.
+                </p>
+              ) : null}
               <button
                 type="button"
                 onClick={() =>
                   downloadBlob(result.blob, `${stripExtension(file.name)}-compressed.pdf`)
                 }
-                className="mt-3 rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-700"
+                className="btn-primary mt-4"
               >
                 Download PDF
               </button>
             </div>
           ) : null}
 
-          {error ? <p className="mt-4 text-sm text-red-600">{error}</p> : null}
+          {error ? <p className="mt-4 text-sm text-red-400">{error}</p> : null}
         </div>
       ) : (
         <Dropzone
