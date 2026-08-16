@@ -34,7 +34,8 @@ export function parseRanges(expression: string, pageCount: number): PageRange[] 
     if (!match) throw new Error(`"${trimmed}" is not a valid page range.`)
     const from = Number(match[1])
     const to = match[2] ? Number(match[2]) : from
-    if (from < 1 || to > pageCount || from > to) {
+    if (from > to) throw new Error(`Range "${trimmed}" starts after it ends.`)
+    if (from < 1 || to > pageCount) {
       throw new Error(`Range "${trimmed}" is outside 1-${pageCount}.`)
     }
     ranges.push({ from, to })

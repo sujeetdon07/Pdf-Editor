@@ -50,6 +50,7 @@ export default function ImageToPdf() {
   }
 
   function move(index: number, delta: number) {
+    setPdf(null)
     setItems((current) => {
       const next = [...current]
       const target = index + delta
@@ -182,7 +183,10 @@ export default function ImageToPdf() {
                     </div>
                     <button
                       type="button"
-                      onClick={() => setItems((current) => current.filter((c) => c.id !== item.id))}
+                      onClick={() => {
+                        setPdf(null)
+                        setItems((current) => current.filter((c) => c.id !== item.id))
+                      }}
                       className="font-medium text-slate-500 hover:text-brand-600"
                     >
                       Remove

@@ -34,6 +34,7 @@ export default function MergePdf() {
   }
 
   function move(index: number, delta: number) {
+    setMerged(null)
     setItems((current) => {
       const next = [...current]
       const target = index + delta
@@ -134,7 +135,10 @@ export default function MergePdf() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => setItems((current) => current.filter((c) => c.id !== item.id))}
+                  onClick={() => {
+                    setMerged(null)
+                    setItems((current) => current.filter((c) => c.id !== item.id))
+                  }}
                   className="text-sm font-medium text-slate-500 hover:text-brand-600"
                 >
                   Remove

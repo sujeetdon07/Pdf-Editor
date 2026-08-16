@@ -30,6 +30,10 @@ export default function SplitPdf() {
 
   async function run() {
     if (!file) return
+    if (pageCount === 0) {
+      setError('Could not read this PDF.')
+      return
+    }
     setIsWorking(true)
     setError(null)
     setParts([])

@@ -9,6 +9,14 @@ const NAV = [
   { to: '/rotate-pdf', label: 'Rotate' },
 ]
 
+function navLinkClass({ isActive }: { isActive: boolean }) {
+  return `rounded-lg px-3 py-2 text-sm font-medium transition ${
+    isActive
+      ? 'bg-brand-50 text-brand-600'
+      : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+  }`
+}
+
 export default function Layout() {
   return (
     <div className="flex min-h-full flex-col">
@@ -24,22 +32,19 @@ export default function Layout() {
           </Link>
           <nav className="hidden gap-1 sm:flex">
             {NAV.map((item) => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                className={({ isActive }) =>
-                  `rounded-lg px-3 py-2 text-sm font-medium transition ${
-                    isActive
-                      ? 'bg-brand-50 text-brand-600'
-                      : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
-                  }`
-                }
-              >
+              <NavLink key={item.to} to={item.to} className={navLinkClass}>
                 {item.label}
               </NavLink>
             ))}
           </nav>
         </div>
+        <nav className="flex gap-1 overflow-x-auto px-4 pb-2 sm:hidden">
+          {NAV.map((item) => (
+            <NavLink key={item.to} to={item.to} className={navLinkClass}>
+              <span className="whitespace-nowrap">{item.label}</span>
+            </NavLink>
+          ))}
+        </nav>
       </header>
 
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
