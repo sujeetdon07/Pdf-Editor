@@ -51,6 +51,23 @@ export async function pdfToImages(
   return pages
 }
 
+export async function renderThumbnails(file: File, maxPages = 60): Promise<string[]> {
+  const pdf = await loadPdf(await file.arrayBuffer())
+  const thumbnails: string[] = []
+  const count = Math.min(pdf.numPages, maxPages)
+
+  for (let pageNumber = 1; pageNumber <= count; pageNumber += 1) {
+    const canvas = await renderPageToCanvas(pdf, pageNumber, 0.35)
+    const blob = await canvasToBlob(canvas, 'image/jpeg', 0.7)
+    thumbnails.push(URL.createObjectURL(blob))
+    canvas.width = 0
+    canvas.height = 0
+  }
+
+  await pdf.destroy()
+  return thumbnails
+}
+
 export async function zipPages(pages: RenderedPage[]): Promise<Blob> {
   const zip = new JSZip()
   for (const page of pages) {
