@@ -1,3 +1,5 @@
+import { recordFile } from './stats'
+
 export function formatBytes(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`
   const units = ['KB', 'MB', 'GB']
@@ -15,6 +17,7 @@ export function stripExtension(name: string): string {
 }
 
 export function downloadBlob(blob: Blob, filename: string): void {
+  recordFile(blob.size)
   const url = URL.createObjectURL(blob)
   const link = document.createElement('a')
   link.href = url

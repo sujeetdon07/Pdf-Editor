@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { NAV_GROUPS, PAGES, SITE, TOOLS } from '../content/site'
+import StatsBand from './StatsBand'
 
 function navLinkClass({ isActive }: { isActive: boolean }) {
   return `flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium transition ${
@@ -139,6 +140,8 @@ export default function Layout() {
         <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-10 sm:px-8">
           <Outlet />
         </main>
+
+        <StatsBand />
 
         <footer className="border-t border-ink-800 bg-ink-950/60">
           <div className="mx-auto grid w-full max-w-5xl gap-8 px-4 py-10 sm:grid-cols-2 sm:px-8 lg:grid-cols-4">
